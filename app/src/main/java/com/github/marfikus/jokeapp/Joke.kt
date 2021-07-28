@@ -1,7 +1,12 @@
 package com.github.marfikus.jokeapp
 
-class Joke(private val text: String, private val punchline: String) {
+interface Joke {
 
-    // TODO: 28.07.21 сделать мапер и добавить интерфейс (как в ошибке)
-    fun getJokeUi() = "$text\n$punchline"
+    fun getJokeUi(): String
+}
+
+class TestJoke(private val text: String, private val punchline: String) : Joke {
+
+    // TODO: 28.07.21 сделать мапер
+    override fun getJokeUi() = "$text\n$punchline"
 }
