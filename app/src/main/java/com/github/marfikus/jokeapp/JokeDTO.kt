@@ -11,4 +11,7 @@ data class JokeDTO(
     private val text: String,
     @SerializedName("punchline")
     private val punchline: String
-)
+) {
+
+    fun toJoke() = TestJoke(text, punchline)
+}

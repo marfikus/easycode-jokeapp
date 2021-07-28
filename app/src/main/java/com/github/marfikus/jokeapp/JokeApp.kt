@@ -1,6 +1,7 @@
 package com.github.marfikus.jokeapp
 
 import android.app.Application
+import com.google.gson.Gson
 
 class JokeApp : Application() {
 
@@ -9,6 +10,6 @@ class JokeApp : Application() {
     override fun onCreate() {
         super.onCreate()
 //        viewModel = ViewModel(TestModel(BaseResourceManager(this)))
-        viewModel = ViewModel(BaseModel(BaseJokeService(), BaseResourceManager(this)))
+        viewModel = ViewModel(BaseModel(BaseJokeService(Gson()), BaseResourceManager(this)))
     }
 }
