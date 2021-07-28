@@ -7,13 +7,15 @@ class TestModel : Model<Any, Any> {
     private var count = 1
 
     override fun getJoke() {
-        Thread.sleep(1000)
-        if (count % 2 == 0) {
-            callback?.provideSuccess("success")
-        } else {
-            callback?.provideError("error")
-        }
-        count++
+        Thread {
+            Thread.sleep(1000)
+            if (count % 2 == 0) {
+                callback?.provideSuccess("success")
+            } else {
+                callback?.provideError("error")
+            }
+            count++
+        }.start()
     }
 
     override fun init(callback: ResultCallback<Any, Any>) {
