@@ -1,12 +1,12 @@
 package com.github.marfikus.jokeapp
 
-class ViewModel(private val model: Model<Joke, JokeFailure>) {
+class ViewModel(private val model: Model) {
 
     private var callback: TextCallback? = null
 
     fun init(callback: TextCallback) {
         this.callback = callback
-        model.init(object : ResultCallback<Joke, JokeFailure> {
+        model.init(object : ResultCallback {
             override fun provideSuccess(data: Joke) {
                 callback.provideText(data.getJokeUi())
             }

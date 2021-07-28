@@ -1,17 +1,17 @@
 package com.github.marfikus.jokeapp
 
-interface Model<S, E> {
+interface Model {
 
     fun getJoke()
 
-    fun init(callback: ResultCallback<S, E>)
+    fun init(callback: ResultCallback)
 
     fun clear()
 }
 
-interface ResultCallback<S, E> {
+interface ResultCallback {
 
-    fun provideSuccess(data: S)
+    fun provideSuccess(data: Joke)
 
-    fun provideError(error: E)
+    fun provideError(error: JokeFailure)
 }
