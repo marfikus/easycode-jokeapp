@@ -1,7 +1,8 @@
 package com.github.marfikus.jokeapp
 
 import android.app.Application
-import com.google.gson.Gson
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class JokeApp : Application() {
 
@@ -9,7 +10,18 @@ class JokeApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.google.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
 //        viewModel = ViewModel(TestModel(BaseResourceManager(this)))
-        viewModel = ViewModel(BaseModel(BaseJokeService(Gson()), BaseResourceManager(this)))
+        viewModel = ViewModel(
+            BaseModel(
+                retrofit.create(JokeService::class.java),
+                BaseResourceManager(this)
+            )
+        )
     }
 }
