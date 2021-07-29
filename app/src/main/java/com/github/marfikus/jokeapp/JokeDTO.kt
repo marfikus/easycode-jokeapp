@@ -13,5 +13,5 @@ data class JokeDTO(
     private val punchline: String
 ) {
 
-    fun toJoke() = TestJoke(text, punchline)
+    fun toJoke() = BaseJoke(text, punchline)
 }

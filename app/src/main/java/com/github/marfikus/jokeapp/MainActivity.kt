@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
         checkBox.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.chooseFavorites(isChecked)
+//            viewModel.chooseFavorites(isChecked)
         }
     }
 
