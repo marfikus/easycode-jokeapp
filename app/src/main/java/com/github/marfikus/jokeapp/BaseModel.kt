@@ -32,6 +32,12 @@ class BaseModel(
         })
     }
 
+    override fun changeJokeStatus(jokeCallback: JokeCallback) {
+        cachedJokeServerModel?.change(cacheDataSource)?.let {
+            jokeCallback.provide(it)
+        }
+    }
+
     override fun init(callback: JokeCallback) {
         this.jokeCallback = callback
     }
