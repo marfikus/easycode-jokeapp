@@ -13,7 +13,9 @@ data class JokeServerModel(
     private val punchline: String
 ) {
 
-    fun toJoke() = BaseJoke(text, punchline)
+    fun toBaseJoke() = BaseJoke(text, punchline)
+
+    fun toFavoriteJoke() = FavoriteJoke(text, punchline)
 
     fun change(cacheDataSource: CacheDataSource) = cacheDataSource.addOrRemove(id, this)
 }
