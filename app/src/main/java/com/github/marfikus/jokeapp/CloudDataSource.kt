@@ -2,5 +2,5 @@ package com.github.marfikus.jokeapp
 
 interface CloudDataSource {
 
-    fun getJoke(callback: JokeCallback)
+    fun getJoke(callback: JokeCloudCallback)
 }
