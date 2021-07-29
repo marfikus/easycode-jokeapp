@@ -1,12 +1,23 @@
 package com.github.marfikus.jokeapp
 
-interface Joke {
+import androidx.annotation.DrawableRes
 
-    fun getJokeUi(): String
+abstract class Joke(private val text: String, private val punchline: String) {
+
+    fun getJokeUi() = "$text\n$punchline"
+
+    @DrawableRes
+    abstract fun getIconResId(): Int
 }
 
-class TestJoke(private val text: String, private val punchline: String) : Joke {
+class BaseJoke(text: String, punchline: String) : Joke(text, punchline) {
+    override fun getIconResId() = R.drawable.baseline_favorite_border_24
+}
 
-    // TODO: 28.07.21 сделать мапер
-    override fun getJokeUi() = "$text\n$punchline"
+class FavoriteJoke(text: String, punchline: String) : Joke(text, punchline) {
+    override fun getIconResId() = R.drawable.baseline_favorite_24
+}
+
+class FailedJoke(text: String) : Joke(text, "") {
+    override fun getIconResId() = 0
 }
