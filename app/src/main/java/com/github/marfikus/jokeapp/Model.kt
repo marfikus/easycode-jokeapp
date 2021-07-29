@@ -4,12 +4,14 @@ interface Model {
 
     fun getJoke()
 
-    fun init(callback: ResultCallback)
+    fun init(callback: JokeCallback)
 
     fun clear()
+
+    fun changeJokeStatus(callback: JokeCallback)
 }
 
-interface ResultCallback {
+interface JokeCallback {
 
-    fun provideJoke(joke: Joke)
+    fun provide(joke: Joke)
 }
