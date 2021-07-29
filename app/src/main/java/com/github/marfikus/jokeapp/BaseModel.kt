@@ -2,7 +2,6 @@ package com.github.marfikus.jokeapp
 
 import retrofit2.Call
 import retrofit2.Response
-import java.net.UnknownHostException
 
 class BaseModel(
     private val service: JokeService,
@@ -14,8 +13,8 @@ class BaseModel(
     private val serviceUnavailable by lazy { ServiceUnavailable(resourceManager) }
 
     override fun getJoke() {
-        service.getJoke().enqueue(object : retrofit2.Callback<JokeDTO> {
-            override fun onResponse(call: Call<JokeDTO>, response: Response<JokeDTO>) {
+        service.getJoke().enqueue(object : retrofit2.Callback<JokeServerModel> {
+            override fun onResponse(call: Call<JokeServerModel>, response: Response<JokeServerModel>) {
                 if (response.isSuccessful) {
 //                    callback?.provideSuccess(response.body()!!.toJoke())
                 } else {
@@ -23,7 +22,7 @@ class BaseModel(
                 }
             }
 
-            override fun onFailure(call: Call<JokeDTO>, t: Throwable) {
+            override fun onFailure(call: Call<JokeServerModel>, t: Throwable) {
 //                if (t is UnknownHostException)
 //                    callback?.provideError(noConnection)
 //                else

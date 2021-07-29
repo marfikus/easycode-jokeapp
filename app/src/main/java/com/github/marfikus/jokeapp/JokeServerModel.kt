@@ -2,7 +2,7 @@ package com.github.marfikus.jokeapp
 
 import com.google.gson.annotations.SerializedName
 
-data class JokeDTO(
+data class JokeServerModel(
     @SerializedName("id")
     private val id: Int,
     @SerializedName("type")
@@ -14,4 +14,6 @@ data class JokeDTO(
 ) {
 
     fun toJoke() = BaseJoke(text, punchline)
+
+    fun change(cacheDataSource: CacheDataSource) = cacheDataSource.addOrRemove(id, this)
 }
