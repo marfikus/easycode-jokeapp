@@ -10,6 +10,7 @@
     <CheckBox
         android:id="@+id/checkBox"
         android:padding="@dimen/padding"
+        android:layout_margin="8dp"
         android:text="@string/show_favorite_joke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -32,8 +33,9 @@
             android:id="@+id/iconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/baseline_favorite_24"
             android:layout_gravity="center_vertical"
+            android:padding="@dimen/padding"
             android:contentDescription="@string/icon_add_to_favorite" />
     </LinearLayout>
 
