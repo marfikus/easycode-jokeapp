@@ -4,38 +4,39 @@ import retrofit2.Call
 import retrofit2.Response
 
 class BaseModel(
-    private val service: JokeService,
+    private val cacheDataSource: CacheDataSource,
+    private val cloudDataSource: CloudDataSource,
     private val resourceManager: ResourceManager
 ) : Model {
 
-    private var callback: ResultCallback? = null
     private val noConnection by lazy { NoConnection(resourceManager) }
     private val serviceUnavailable by lazy { ServiceUnavailable(resourceManager) }
 
+    private var jokeCallback: JokeCallback? = null
+
+    private var cachedJokeServerModel: JokeServerModel? = null
+
     override fun getJoke() {
-        service.getJoke().enqueue(object : retrofit2.Callback<JokeServerModel> {
-            override fun onResponse(call: Call<JokeServerModel>, response: Response<JokeServerModel>) {
-                if (response.isSuccessful) {
-//                    callback?.provideSuccess(response.body()!!.toJoke())
-                } else {
-//                    callback?.provideError(serviceUnavailable)
-                }
+        cloudDataSource.getJoke(object : JokeCloudCallback {
+            override fun provide(joke: JokeServerModel) {
+                cachedJokeServerModel = joke
+                jokeCallback?.provide(joke.toBaseJoke())
             }
 
-            override fun onFailure(call: Call<JokeServerModel>, t: Throwable) {
-//                if (t is UnknownHostException)
-//                    callback?.provideError(noConnection)
-//                else
-//                    callback?.provideError(serviceUnavailable)
+            override fun fail(error: ErrorType) {
+                cachedJokeServerModel = null
+                val failure = if (error == ErrorType.NO_CONNECTION) noConnection else serviceUnavailable
+                jokeCallback?.provide(FailedJoke(failure.getMessage()))
             }
+
         })
     }
 
-    override fun init(callback: ResultCallback) {
-        this.callback = callback
+    override fun init(callback: JokeCallback) {
+        this.jokeCallback = callback
     }
 
     override fun clear() {
-        callback = null
+        jokeCallback = null
     }
 }
