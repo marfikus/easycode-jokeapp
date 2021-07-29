@@ -14,38 +14,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = (application as JokeApp).viewModel
-        val button = findViewById<Button>(R.id.actionButton)
+        val actionButton = findViewById<Button>(R.id.actionButton)
         val textView = findViewById<TextView>(R.id.textView)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.INVISIBLE
-        val iconView = findViewById<ImageView>(R.id.iconView)
 
-        button.setOnClickListener {
-            button.isEnabled = false
+        actionButton.setOnClickListener {
+            actionButton.isEnabled = false
             progressBar.visibility = View.VISIBLE
             viewModel.getJoke()
         }
 
+        val changeButton = findViewById<ImageButton>(R.id.changeButton)
+        changeButton.setOnClickListener {
+            viewModel.changeJokeStatus()
+        }
+
         viewModel.init(object : DataCallback {
             override fun provideText(text: String) = runOnUiThread {
-                button.isEnabled = true
+                actionButton.isEnabled = true
                 progressBar.visibility = View.INVISIBLE
                 textView.text = text
             }
 
             override fun provideIconRes(id: Int) = runOnUiThread {
-                iconView.setImageResource(id)
+                changeButton.setImageResource(id)
             }
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
         checkBox.setOnCheckedChangeListener { _, isChecked ->
 //            viewModel.chooseFavorites(isChecked)
-        }
-
-        val changeButton = findViewById<ImageButton>(R.id.changeButton)
-        changeButton.setOnClickListener {
-            viewModel.changeJokeStatus()
         }
     }
 
