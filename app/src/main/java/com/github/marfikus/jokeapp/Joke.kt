@@ -4,10 +4,15 @@ import androidx.annotation.DrawableRes
 
 abstract class Joke(private val text: String, private val punchline: String) {
 
-    fun getJokeUi() = "$text\n$punchline"
+    protected fun getJokeUi() = "$text\n$punchline"
 
     @DrawableRes
-    abstract fun getIconResId(): Int
+    protected abstract fun getIconResId(): Int
+
+    fun map(callback: DataCallback) = callback.run {
+        provideText(getJokeUi())
+        provideIconRes(getIconResId())
+    }
 }
 
 class BaseJoke(text: String, punchline: String) : Joke(text, punchline) {

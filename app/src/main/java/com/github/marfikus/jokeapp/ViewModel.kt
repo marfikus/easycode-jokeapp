@@ -10,9 +10,8 @@ class ViewModel(private val model: Model) {
         this.dataCallback = callback
         model.init(object : ResultCallback {
             override fun provideJoke(joke: Joke) {
-                dataCallback?.run {
-                    provideText(joke.getJokeUi())
-                    provideIconRes(joke.getIconResId())
+                dataCallback?.let {
+                    joke.map(it)
                 }
             }
         })
