@@ -11,7 +11,5 @@ interface Model {
 
 interface ResultCallback {
 
-    fun provideSuccess(data: Joke)
-
-    fun provideError(error: JokeFailure)
+    fun provideJoke(joke: Joke)
 }

@@ -4,17 +4,16 @@ import androidx.annotation.DrawableRes
 
 class ViewModel(private val model: Model) {
 
-    private var callback: DataCallback? = null
+    private var dataCallback: DataCallback? = null
 
     fun init(callback: DataCallback) {
-        this.callback = callback
+        this.dataCallback = callback
         model.init(object : ResultCallback {
-            override fun provideSuccess(data: Joke) {
-                callback.provideText(data.getJokeUi())
-            }
-
-            override fun provideError(error: JokeFailure) {
-                callback.provideText(error.getMessage())
+            override fun provideJoke(joke: Joke) {
+                dataCallback?.run {
+                    provideText(joke.getJokeUi())
+                    provideIconRes(joke.getIconResId())
+                }
             }
         })
     }
@@ -24,7 +23,7 @@ class ViewModel(private val model: Model) {
     }
 
     fun clear() {
-        callback = null
+        dataCallback = null
         model.clear()
     }
 }
