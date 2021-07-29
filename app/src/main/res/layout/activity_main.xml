@@ -29,12 +29,13 @@
             android:gravity="center"
             tools:text="Joke or error message" />
         
-        <ImageView
-            android:id="@+id/iconView"
+        <ImageButton
+            android:id="@+id/changeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_favorite_24"
+            android:background="?selectableItemBackground"
             android:layout_gravity="center_vertical"
+            tools:src="@android:drawable/ic_input_add"
             android:padding="@dimen/padding"
             android:contentDescription="@string/icon_add_to_favorite" />
     </LinearLayout>

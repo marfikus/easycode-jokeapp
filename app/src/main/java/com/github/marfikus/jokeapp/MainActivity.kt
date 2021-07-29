@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         checkBox.setOnCheckedChangeListener { _, isChecked ->
 //            viewModel.chooseFavorites(isChecked)
         }
+
+        val changeButton = findViewById<ImageButton>(R.id.changeButton)
+        changeButton.setOnClickListener {
+            viewModel.changeJokeStatus()
+        }
     }
 
     override fun onDestroy() {
