@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
                 textView.text = text
             }
 
-            override fun provideIconRes(id: Int) = iconView.setImageResource(id)
+            override fun provideIconRes(id: Int) = runOnUiThread {
+                iconView.setImageResource(id)
+            }
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
