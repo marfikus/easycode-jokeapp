@@ -2,7 +2,11 @@ package com.github.marfikus.jokeapp
 
 class TestCloudDataSource : CloudDataSource {
 
+    private var count = 0
+
     override fun getJoke(callback: JokeCloudCallback) {
-        callback.provide(JokeServerModel(0, "testType", "testText", "testPunchline"))
+        val joke = JokeServerModel(count, "testType", "testText$count", "testPunchline$count")
+        callback.provide(joke)
+        count++
     }
 }
