@@ -38,6 +38,10 @@ class BaseModel(
         }
     }
 
+    override fun chooseDataSource(cached: Boolean) {
+        TODO("Not yet implemented")
+    }
+
     override fun init(callback: JokeCallback) {
         this.jokeCallback = callback
     }

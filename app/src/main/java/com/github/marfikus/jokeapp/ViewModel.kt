@@ -28,6 +28,10 @@ class ViewModel(private val model: Model) {
         model.changeJokeStatus(jokeCallback)
     }
 
+    fun chooseFavorites(favorites: Boolean) {
+        model.chooseDataSource(favorites)
+    }
+
     fun clear() {
         dataCallback = null
         model.clear()

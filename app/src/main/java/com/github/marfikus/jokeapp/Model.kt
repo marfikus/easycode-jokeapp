@@ -9,6 +9,8 @@ interface Model {
     fun clear()
 
     fun changeJokeStatus(callback: JokeCallback)
+
+    fun chooseDataSource(cached: Boolean)
 }
 
 interface JokeCallback {
