@@ -16,12 +16,10 @@ class JokeApp : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        viewModel = ViewModel(TestModel(BaseResourceManager(this)))
-/*        viewModel = ViewModel(
-            BaseModel(
-                retrofit.create(JokeService::class.java),
-                BaseResourceManager(this)
-            )
-        )*/
+//        viewModel = ViewModel(TestModel(BaseResourceManager(this)))
+        viewModel = ViewModel(
+            BaseModel(TestCacheDataSource(), TestCloudDataSource(), BaseResourceManager(this))
+        )
+
     }
 }

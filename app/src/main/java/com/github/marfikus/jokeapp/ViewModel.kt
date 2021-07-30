@@ -24,6 +24,7 @@ class ViewModel(private val model: Model) {
     }
 
     fun changeJokeStatus() {
+        // TODO: 30.07.21 зачем ещё раз передавать колбек?
         model.changeJokeStatus(jokeCallback)
     }
 
