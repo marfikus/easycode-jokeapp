@@ -1,8 +1,5 @@
 package com.github.marfikus.jokeapp
 
-import retrofit2.Call
-import retrofit2.Response
-
 class BaseModel(
     private val cacheDataSource: CacheDataSource,
     private val cloudDataSource: CloudDataSource,
@@ -11,25 +8,40 @@ class BaseModel(
 
     private val noConnection by lazy { NoConnection(resourceManager) }
     private val serviceUnavailable by lazy { ServiceUnavailable(resourceManager) }
+    private val noCachedJokes by lazy { NoCachedJokes(resourceManager) }
 
     private var jokeCallback: JokeCallback? = null
 
     private var cachedJokeServerModel: JokeServerModel? = null
 
+    private var getJokeFromCache = false
+
     override fun getJoke() {
-        cloudDataSource.getJoke(object : JokeCloudCallback {
-            override fun provide(joke: JokeServerModel) {
-                cachedJokeServerModel = joke
-                jokeCallback?.provide(joke.toBaseJoke())
-            }
+        if (getJokeFromCache) {
+            cacheDataSource.getJoke(object : JokeCachedCallback {
+                override fun provide(jokeServerModel: JokeServerModel) {
+                    jokeCallback?.provide(jokeServerModel.toFavoriteJoke())
+                }
 
-            override fun fail(error: ErrorType) {
-                cachedJokeServerModel = null
-                val failure = if (error == ErrorType.NO_CONNECTION) noConnection else serviceUnavailable
-                jokeCallback?.provide(FailedJoke(failure.getMessage()))
-            }
+                override fun fail() {
+                    jokeCallback?.provide(FailedJoke(noCachedJokes.getMessage()))
+                }
 
-        })
+            })
+        } else {
+            cloudDataSource.getJoke(object : JokeCloudCallback {
+                override fun provide(joke: JokeServerModel) {
+                    cachedJokeServerModel = joke
+                    jokeCallback?.provide(joke.toBaseJoke())
+                }
+
+                override fun fail(error: ErrorType) {
+                    cachedJokeServerModel = null
+                    val failure = if (error == ErrorType.NO_CONNECTION) noConnection else serviceUnavailable
+                    jokeCallback?.provide(FailedJoke(failure.getMessage()))
+                }
+            })
+        }
     }
 
     override fun changeJokeStatus(jokeCallback: JokeCallback) {
@@ -39,7 +51,7 @@ class BaseModel(
     }
 
     override fun chooseDataSource(cached: Boolean) {
-        TODO("Not yet implemented")
+        getJokeFromCache = cached
     }
 
     override fun init(callback: JokeCallback) {

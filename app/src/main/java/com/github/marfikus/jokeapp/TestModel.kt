@@ -31,4 +31,8 @@ class TestModel(resourceManager: ResourceManager) : Model {
     override fun changeJokeStatus(callback: JokeCallback) {
         TODO("Not yet implemented")
     }
+
+    override fun chooseDataSource(cached: Boolean) {
+        TODO("Not yet implemented")
+    }
 }
