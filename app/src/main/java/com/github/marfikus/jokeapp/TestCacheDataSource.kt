@@ -19,6 +19,6 @@ class TestCacheDataSource : CacheDataSource {
         if (map.isEmpty())
             jokeCachedCallback.fail()
         else
-            jokeCachedCallback.provide(map[0]!!)
+            jokeCachedCallback.provide(map.values.random())
     }
 }
