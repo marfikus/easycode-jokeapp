@@ -20,10 +20,12 @@ class BaseModel(
         if (getJokeFromCache) {
             cacheDataSource.getJoke(object : JokeCachedCallback {
                 override fun provide(jokeServerModel: JokeServerModel) {
+                    cachedJokeServerModel = jokeServerModel
                     jokeCallback?.provide(jokeServerModel.toFavoriteJoke())
                 }
 
                 override fun fail() {
+                    cachedJokeServerModel = null
                     jokeCallback?.provide(FailedJoke(noCachedJokes.getMessage()))
                 }
 
