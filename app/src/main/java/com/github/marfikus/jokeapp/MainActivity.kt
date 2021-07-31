@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             viewModel.chooseFavorites(isChecked)
         }
+
+        // fix: return joke from favorites after closing app
+        viewModel.chooseFavorites(checkBox.isChecked)
     }
 
     override fun onDestroy() {
