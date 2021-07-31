@@ -1,9 +1,9 @@
 package com.github.marfikus.jokeapp
 
+/*
 class TestCacheDataSource : CacheDataSource {
 
     private val list = ArrayList<Pair<Int, JokeServerModel>>()
-
     override fun getJoke(jokeCachedCallback: JokeCachedCallback) {
         if (list.isEmpty()) {
             jokeCachedCallback.fail()
@@ -12,7 +12,12 @@ class TestCacheDataSource : CacheDataSource {
         }
     }
 
-    override fun addOrRemove(id: Int, jokeServerModel: JokeServerModel): Joke {
+    override fun addOrRemove(id: Int, jokeServerModel: JokeServerModel, jokeServerModelCallback: JokeServerModelCallback) {
+        TODO("Not yet implemented")
+    }
+
+*/
+/*    override fun addOrRemove(id: Int, jokeServerModel: JokeServerModel): Joke {
         val found = list.find { it.first == id }
         return if (found != null) {
             val joke = found.second.toBaseJoke()
@@ -22,5 +27,6 @@ class TestCacheDataSource : CacheDataSource {
             list.add(Pair(id, jokeServerModel))
             jokeServerModel.toFavoriteJoke()
         }
-    }
-}
+    }*//*
+
+}*/

@@ -26,5 +26,7 @@ data class JokeServerModel(
         }
     }
 
-    fun change(cacheDataSource: CacheDataSource) = cacheDataSource.addOrRemove(id, this)
+    fun change(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
+        cacheDataSource.addOrRemove(id, this, modelCallback)
+    }
 }
