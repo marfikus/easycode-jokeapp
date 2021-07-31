@@ -1,12 +1,11 @@
 package com.github.marfikus.jokeapp
 
 import io.realm.Realm
-import io.realm.RealmConfiguration
 
-class BaseCacheDataSource(private val realmConfig: RealmConfiguration) : CacheDataSource {
+class BaseCacheDataSource : CacheDataSource {
 
     override fun getJoke(jokeCachedCallback: JokeCachedCallback) {
-        val realm = Realm.getInstance(realmConfig)
+        val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokes = it.where(JokeRealm::class.java).findAll()
             if (jokes.isEmpty()) {
@@ -14,24 +13,19 @@ class BaseCacheDataSource(private val realmConfig: RealmConfiguration) : CacheDa
             } else {
                 jokes.random().let { joke ->
                     jokeCachedCallback.provide(
-                            JokeServerModel(
-                                    joke.id,
-                                    joke.type,
-                                    joke.text,
-                                    joke.punchLine
-                            )
+                            JokeServerModel(joke.id, joke.type, joke.text, joke.punchLine)
                     )
                 }
             }
         }
-//        realm.close()
+        realm.close()
     }
 
     override fun addOrRemove(id: Int,
                              jokeServerModel: JokeServerModel,
                              modelCallback: ModelCallback) {
 
-        val realm = Realm.getInstance(realmConfig)
+        val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
@@ -43,7 +37,7 @@ class BaseCacheDataSource(private val realmConfig: RealmConfiguration) : CacheDa
                 jokeRealm.deleteFromRealm()
             }
         }
-//        realm.close()
-        }
+        realm.close()
+    }
 
 }

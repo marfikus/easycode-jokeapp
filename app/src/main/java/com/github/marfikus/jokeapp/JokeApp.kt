@@ -1,6 +1,5 @@
 package com.github.marfikus.jokeapp
 
-import android.app.Application
 import androidx.multidex.MultiDexApplication
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -24,14 +23,14 @@ class JokeApp : MultiDexApplication() {
 
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
-                .name("Realm-db")
+                .name("realm-local-db")
                 .build()
-//        realm = Realm.getDefaultInstance()
+        Realm.setDefaultConfiguration(realmConfig)
 
         viewModel = ViewModel(
 //            BaseModel(TestCacheDataSource(), TestCloudDataSource(), BaseResourceManager(this))
             BaseModel(
-                BaseCacheDataSource(realmConfig),
+                BaseCacheDataSource(),
                 BaseCloudDataSource(retrofit.create(JokeService::class.java)),
                 BaseResourceManager(this)
             )
