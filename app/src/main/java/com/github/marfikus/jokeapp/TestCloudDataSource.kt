@@ -6,7 +6,7 @@ class TestCloudDataSource : CloudDataSource {
 
     override fun getJoke(callback: JokeCloudCallback) {
         val joke = JokeServerModel(count, "testType", "testText$count", "testPunchline$count")
-        callback.provide(joke)
+        callback.provide(joke.toJokeModel())
         count++
         if (count == 3)
             count = 0

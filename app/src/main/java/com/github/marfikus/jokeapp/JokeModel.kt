@@ -7,13 +7,6 @@ class JokeModel(
     private val punchline: String,
 ) {
 
-    fun toJokeServerModel() = JokeServerModel(
-        id = id,
-        type = type,
-        text = text,
-        punchline = punchline
-    )
-
     fun toJokeRealm() = JokeRealm().also {
         it.id = id
         it.type = type

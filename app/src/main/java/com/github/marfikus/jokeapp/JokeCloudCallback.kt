@@ -1,7 +1,9 @@
 package com.github.marfikus.jokeapp
 
 interface JokeCloudCallback {
-    fun provide(joke: JokeServerModel)
+
+    fun provide(jokeModel: JokeModel)
+
     fun fail(error: ErrorType)
 }
 

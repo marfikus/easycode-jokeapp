@@ -12,7 +12,7 @@ class BaseModel(
 
     private var jokeCallback: JokeCallback? = null
 
-    private var cachedJokeServerModel: JokeServerModel? = null
+    private var cachedJokeModel: JokeModel? = null
 
     private var getJokeFromCache = false
 
@@ -20,35 +20,35 @@ class BaseModel(
         if (getJokeFromCache) {
             cacheDataSource.getJoke(object : JokeCachedCallback {
                 override fun provide(jokeModel: JokeModel) {
-                    cachedJokeServerModel = jokeModel
+                    cachedJokeModel = jokeModel
                     jokeCallback?.provide(jokeModel.toFavoriteJoke())
                 }
 
                 override fun fail() {
-                    cachedJokeServerModel = null
+                    cachedJokeModel = null
                     jokeCallback?.provide(FailedJoke(noCachedJokes.getMessage()))
                 }
 
             })
         } else {
             cloudDataSource.getJoke(object : JokeCloudCallback {
-                override fun provide(joke: JokeServerModel) {
-                    cachedJokeServerModel = joke
+                override fun provide(jokeModel: JokeModel) {
+                    cachedJokeModel = jokeModel
 
                     // check on favorite (if joke already in favorites)
-                    joke.checkExistInCache(cacheDataSource, object : CacheDataSourceCallback {
+                    jokeModel.checkExistInCache(cacheDataSource, object : CacheDataSourceCallback {
                         override fun onResult(exists: Boolean) {
                             if (exists) {
-                                jokeCallback?.provide(joke.toFavoriteJoke())
+                                jokeCallback?.provide(jokeModel.toFavoriteJoke())
                             } else {
-                                jokeCallback?.provide(joke.toBaseJoke())
+                                jokeCallback?.provide(jokeModel.toBaseJoke())
                             }
                         }
                     })
                 }
 
                 override fun fail(error: ErrorType) {
-                    cachedJokeServerModel = null
+                    cachedJokeModel = null
                     val failure = if (error == ErrorType.NO_CONNECTION) noConnection else serviceUnavailable
                     jokeCallback?.provide(FailedJoke(failure.getMessage()))
                 }
@@ -57,7 +57,7 @@ class BaseModel(
     }
 
     override fun changeJokeStatus(jokeCallback: JokeCallback) {
-        cachedJokeServerModel?.changeStatus(cacheDataSource, object : ChangeStatusCallback {
+        cachedJokeModel?.changeStatus(cacheDataSource, object : ChangeStatusCallback {
             override fun provide(joke: Joke) {
                 jokeCallback.provide(joke)
             }

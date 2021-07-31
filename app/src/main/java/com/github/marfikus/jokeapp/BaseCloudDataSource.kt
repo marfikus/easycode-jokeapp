@@ -13,7 +13,7 @@ class BaseCloudDataSource(private val service: JokeService) : CloudDataSource {
                 response: Response<JokeServerModel>
             ) {
                 if (response.isSuccessful) {
-                    callback.provide(response.body()!!)
+                    callback.provide(response.body()!!.toJokeModel())
                 } else {
                     callback.fail(ErrorType.SERVICE_UNAVAILABLE)
                 }
