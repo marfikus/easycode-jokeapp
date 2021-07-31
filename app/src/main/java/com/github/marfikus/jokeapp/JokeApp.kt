@@ -1,12 +1,15 @@
 package com.github.marfikus.jokeapp
 
 import android.app.Application
+import androidx.multidex.MultiDexApplication
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class JokeApp : Application() {
+// MultiDexApplication needed if minSdkVersion < 20
+//class JokeApp : Application() {
+class JokeApp : MultiDexApplication() {
 
     lateinit var viewModel: ViewModel
     lateinit var realm: Realm
