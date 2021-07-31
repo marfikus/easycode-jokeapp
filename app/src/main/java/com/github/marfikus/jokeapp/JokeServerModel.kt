@@ -31,6 +31,6 @@ data class JokeServerModel(
     }
 
     fun checkExistInCache(cacheDataSource: CacheDataSource, callback: CacheDataSourceCallback) {
-        cacheDataSource.existsInCache(id, callback)
+        cacheDataSource.exists(id, callback)
     }
 }

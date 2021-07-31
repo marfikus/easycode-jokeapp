@@ -37,15 +37,16 @@ class BaseModel(
                 override fun provide(joke: JokeServerModel) {
                     cachedJokeServerModel = joke
 
-                    cachedJokeServerModel?.checkExistInCache(cacheDataSource,
-                        object : CacheDataSourceCallback {
-                            override fun exists(result: Boolean) {
-                                Log.d("ddd", result.toString())
+                    // check on favorite (if joke already in favorites)
+                    joke.checkExistInCache(cacheDataSource, object : CacheDataSourceCallback {
+                        override fun onResult(exists: Boolean) {
+                            if (exists) {
+                                jokeCallback?.provide(joke.toFavoriteJoke())
+                            } else {
+                                jokeCallback?.provide(joke.toBaseJoke())
                             }
                         }
-                    )
-
-                    jokeCallback?.provide(joke.toBaseJoke())
+                    })
                 }
 
                 override fun fail(error: ErrorType) {

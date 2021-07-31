@@ -8,9 +8,10 @@ interface CacheDataSource {
 
     fun getJoke(jokeCachedCallback: JokeCachedCallback)
 
-    fun existsInCache(id: Int, callback: CacheDataSourceCallback)
+    fun exists(id: Int, callback: CacheDataSourceCallback)
 }
 
 interface CacheDataSourceCallback {
-    fun exists(result: Boolean)
+
+    fun onResult(exists: Boolean)
 }
