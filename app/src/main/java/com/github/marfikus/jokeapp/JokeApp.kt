@@ -31,7 +31,8 @@ class JokeApp : MultiDexApplication() {
 //            BaseModel(TestCacheDataSource(), TestCloudDataSource(), BaseResourceManager(this))
             BaseModel(
                 BaseCacheDataSource(),
-                BaseCloudDataSource(retrofit.create(JokeService::class.java)),
+//                BaseCloudDataSource(retrofit.create(JokeService::class.java)),
+                TestCloudDataSource(),
                 BaseResourceManager(this)
             )
         )

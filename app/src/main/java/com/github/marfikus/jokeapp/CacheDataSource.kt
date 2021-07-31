@@ -7,4 +7,10 @@ interface CacheDataSource {
                     modelCallback: ModelCallback)
 
     fun getJoke(jokeCachedCallback: JokeCachedCallback)
+
+    fun existsInCache(id: Int, callback: CacheDataSourceCallback)
+}
+
+interface CacheDataSourceCallback {
+    fun exists(result: Boolean)
 }

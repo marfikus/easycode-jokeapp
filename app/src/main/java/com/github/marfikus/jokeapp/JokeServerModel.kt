@@ -29,4 +29,8 @@ data class JokeServerModel(
     fun change(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
         cacheDataSource.addOrRemove(id, this, modelCallback)
     }
+
+    fun checkExistInCache(cacheDataSource: CacheDataSource, callback: CacheDataSourceCallback) {
+        cacheDataSource.existsInCache(id, callback)
+    }
 }

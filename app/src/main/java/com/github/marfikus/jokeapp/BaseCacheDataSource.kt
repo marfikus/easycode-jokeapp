@@ -40,4 +40,13 @@ class BaseCacheDataSource : CacheDataSource {
         realm.close()
     }
 
+    override fun existsInCache(id: Int, callback: CacheDataSourceCallback) {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransactionAsync {
+            val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
+            callback.exists(jokeRealm != null)
+        }
+        realm.close()
+    }
+
 }
