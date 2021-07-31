@@ -18,7 +18,7 @@ class JokeModel(
         it.id = id
         it.type = type
         it.text = text
-        it.punchLine = punchline
+        it.punchline = punchline
     }
 
     fun toBaseJoke() = BaseJoke(

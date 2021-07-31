@@ -12,27 +12,25 @@ class BaseCacheDataSource : CacheDataSource {
             if (jokes.isEmpty()) {
                 jokeCachedCallback.fail()
             } else {
-                jokes.random().let { joke ->
-                    jokeCachedCallback.provide(
-                            JokeServerModel(joke.id, joke.type, joke.text, joke.punchLine)
-                    )
+                jokes.random().let { jokeRealm ->
+                    jokeCachedCallback.provide(jokeRealm.toJokeModel())
                 }
             }
         }
     }
 
     override fun addOrRemove(id: Int,
-                             jokeServerModel: JokeServerModel,
+                             jokeModel: JokeModel,
                              changeStatusCallback: ChangeStatusCallback) {
 
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
-                changeStatusCallback.provide(jokeServerModel.toFavoriteJoke())
-                val newJoke = jokeServerModel.toJokeRealm()
+                changeStatusCallback.provide(jokeModel.toFavoriteJoke())
+                val newJoke = jokeModel.toJokeRealm()
                 it.insert(newJoke)
             } else {
-                changeStatusCallback.provide(jokeServerModel.toBaseJoke())
+                changeStatusCallback.provide(jokeModel.toBaseJoke())
                 jokeRealm.deleteFromRealm()
             }
         }

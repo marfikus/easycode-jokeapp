@@ -19,9 +19,9 @@ class BaseModel(
     override fun getJoke() {
         if (getJokeFromCache) {
             cacheDataSource.getJoke(object : JokeCachedCallback {
-                override fun provide(jokeServerModel: JokeServerModel) {
-                    cachedJokeServerModel = jokeServerModel
-                    jokeCallback?.provide(jokeServerModel.toFavoriteJoke())
+                override fun provide(jokeModel: JokeModel) {
+                    cachedJokeServerModel = jokeModel
+                    jokeCallback?.provide(jokeModel.toFavoriteJoke())
                 }
 
                 override fun fail() {
