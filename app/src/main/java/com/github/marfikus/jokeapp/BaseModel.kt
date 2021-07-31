@@ -73,9 +73,11 @@ class BaseModel(
 
     override fun init(callback: JokeCallback) {
         this.jokeCallback = callback
+        cacheDataSource.init()
     }
 
     override fun clear() {
         jokeCallback = null
+        cacheDataSource.stop()
     }
 }

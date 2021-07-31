@@ -4,8 +4,9 @@ import io.realm.Realm
 
 class BaseCacheDataSource : CacheDataSource {
 
+    private lateinit var realm: Realm
+
     override fun getJoke(jokeCachedCallback: JokeCachedCallback) {
-        val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokes = it.where(JokeRealm::class.java).findAll()
             if (jokes.isEmpty()) {
@@ -18,14 +19,12 @@ class BaseCacheDataSource : CacheDataSource {
                 }
             }
         }
-        realm.close()
     }
 
     override fun addOrRemove(id: Int,
                              jokeServerModel: JokeServerModel,
                              modelCallback: ModelCallback) {
 
-        val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
@@ -37,15 +36,20 @@ class BaseCacheDataSource : CacheDataSource {
                 jokeRealm.deleteFromRealm()
             }
         }
-        realm.close()
     }
 
     override fun exists(id: Int, callback: CacheDataSourceCallback) {
-        val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             callback.onResult(jokeRealm != null)
         }
+    }
+
+    override fun init() {
+        realm = Realm.getDefaultInstance()
+    }
+
+    override fun stop() {
         realm.close()
     }
 
