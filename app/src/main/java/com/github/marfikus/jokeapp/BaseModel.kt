@@ -1,7 +1,5 @@
 package com.github.marfikus.jokeapp
 
-import android.util.Log
-
 class BaseModel(
     private val cacheDataSource: CacheDataSource,
     private val cloudDataSource: CloudDataSource,
@@ -59,7 +57,7 @@ class BaseModel(
     }
 
     override fun changeJokeStatus(jokeCallback: JokeCallback) {
-        cachedJokeServerModel?.change(cacheDataSource, object : ModelCallback {
+        cachedJokeServerModel?.changeStatus(cacheDataSource, object : ChangeStatusCallback {
             override fun provide(joke: Joke) {
                 jokeCallback.provide(joke)
             }

@@ -3,8 +3,8 @@ package com.github.marfikus.jokeapp
 interface CacheDataSource {
 
     fun addOrRemove(id: Int,
-                    jokeServerModel: JokeServerModel,
-                    modelCallback: ModelCallback)
+                    jokeModel: JokeModel,
+                    changeStatusCallback: ChangeStatusCallback)
 
     fun getJoke(jokeCachedCallback: JokeCachedCallback)
 

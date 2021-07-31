@@ -1,6 +1,6 @@
 package com.github.marfikus.jokeapp
 
-interface ModelCallback {
+interface ChangeStatusCallback {
 
     fun provide(joke: Joke)
 }

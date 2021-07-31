@@ -23,16 +23,16 @@ class BaseCacheDataSource : CacheDataSource {
 
     override fun addOrRemove(id: Int,
                              jokeServerModel: JokeServerModel,
-                             modelCallback: ModelCallback) {
+                             changeStatusCallback: ChangeStatusCallback) {
 
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
-                modelCallback.provide(jokeServerModel.toFavoriteJoke())
+                changeStatusCallback.provide(jokeServerModel.toFavoriteJoke())
                 val newJoke = jokeServerModel.toJokeRealm()
                 it.insert(newJoke)
             } else {
-                modelCallback.provide(jokeServerModel.toBaseJoke())
+                changeStatusCallback.provide(jokeServerModel.toBaseJoke())
                 jokeRealm.deleteFromRealm()
             }
         }

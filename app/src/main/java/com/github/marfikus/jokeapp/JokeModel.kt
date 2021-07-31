@@ -31,8 +31,8 @@ class JokeModel(
         punchline = punchline
     )
 
-    fun changeStatus(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
-        cacheDataSource.addOrRemove(id, this, modelCallback)
+    fun changeStatus(cacheDataSource: CacheDataSource, callback: ChangeStatusCallback) {
+        cacheDataSource.addOrRemove(id, this, callback)
     }
 
     fun checkExistInCache(cacheDataSource: CacheDataSource, callback: CacheDataSourceCallback) {
