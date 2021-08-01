@@ -13,20 +13,10 @@ data class JokeServerModel(
     private val punchline: String
 ) {
 
-    fun toBaseJoke() = BaseJoke(text, punchline)
-
-    fun toFavoriteJoke() = FavoriteJoke(text, punchline)
-
-    fun toJokeRealm(): JokeRealm {
-        return JokeRealm().also {
-            it.id = id
-            it.type = type
-            it.text = text
-            it.punchLine = punchline
-        }
-    }
-
-    fun change(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
-        cacheDataSource.addOrRemove(id, this, modelCallback)
-    }
+    fun toJoke() = Joke(
+        id = id,
+        type = type,
+        text = text,
+        punchline = punchline
+    )
 }
