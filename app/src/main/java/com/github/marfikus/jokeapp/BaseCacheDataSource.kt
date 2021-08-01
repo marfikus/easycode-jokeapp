@@ -1,13 +1,12 @@
 package com.github.marfikus.jokeapp
 
-import io.realm.Realm
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class BaseCacheDataSource : CacheDataSource {
+class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataSource {
 
     override suspend fun getJoke(): Result<Joke, Unit> {
-        Realm.getDefaultInstance().use {
+        realmProvider.provide().use {
             val jokes = it.where(JokeRealmModel::class.java).findAll()
             if (jokes.isEmpty()) {
                 return Result.Error(Unit)
@@ -21,7 +20,7 @@ class BaseCacheDataSource : CacheDataSource {
 
     override suspend fun addOrRemove(id: Int, joke: Joke): JokeUiModel =
         withContext(Dispatchers.IO) {
-            Realm.getDefaultInstance().use {
+            realmProvider.provide().use {
                 val jokeRealm =
                     it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
                 return@withContext if (jokeRealm == null) {

@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class JokeApp : MultiDexApplication() {
 
     lateinit var viewModel: ViewModel
-    lateinit var realm: Realm
 
     override fun onCreate() {
         super.onCreate()
@@ -28,9 +27,8 @@ class JokeApp : MultiDexApplication() {
         Realm.setDefaultConfiguration(realmConfig)
 
         viewModel = ViewModel(
-//            BaseModel(TestCacheDataSource(), TestCloudDataSource(), BaseResourceManager(this))
             BaseModel(
-                BaseCacheDataSource(),
+                BaseCacheDataSource(BaseRealmProvider()),
                 BaseCloudDataSource(retrofit.create(JokeService::class.java)),
                 BaseResourceManager(this)
             )
