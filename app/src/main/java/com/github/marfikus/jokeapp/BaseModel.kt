@@ -29,18 +29,7 @@ class BaseModel(
 
             })
         } else {
-            cloudDataSource.getJoke(object : JokeCloudCallback {
-                override fun provide(joke: Joke) {
-                    cachedJoke = joke
-                    jokeCallback?.provide(joke.toBaseJoke())
-                }
-
-                override fun fail(error: ErrorType) {
-                    cachedJoke = null
-                    val failure = if (error == ErrorType.NO_CONNECTION) noConnection else serviceUnavailable
-                    jokeCallback?.provide(FailedJokeUiModel(failure.getMessage()))
-                }
-            })
+            cloudDataSource.getJoke()
         }
     }
 
