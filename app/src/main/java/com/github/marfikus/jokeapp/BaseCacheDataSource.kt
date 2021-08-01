@@ -19,16 +19,16 @@ class BaseCacheDataSource : CacheDataSource {
         realm.close()
     }
 
-    override fun addOrRemove(id: Int, joke: Joke, modelCallback: ModelCallback) {
+    override fun addOrRemove(id: Int, joke: Joke, changeStatusCallback: ChangeStatusCallback) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
-                modelCallback.provide(joke.toFavoriteJoke())
+                changeStatusCallback.provide(joke.toFavoriteJoke())
                 val newJoke = joke.toJokeRealm()
                 it.insert(newJoke)
             } else {
-                modelCallback.provide(joke.toBaseJoke())
+                changeStatusCallback.provide(joke.toBaseJoke())
                 jokeRealm.deleteFromRealm()
             }
         }

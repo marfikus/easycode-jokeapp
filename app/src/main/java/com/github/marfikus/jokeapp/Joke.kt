@@ -20,7 +20,7 @@ class Joke(
         }
     }
 
-    fun change(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
-        cacheDataSource.addOrRemove(id, this, modelCallback)
+    fun changeStatus(cacheDataSource: CacheDataSource, changeStatusCallback: ChangeStatusCallback) {
+        cacheDataSource.addOrRemove(id, this, changeStatusCallback)
     }
 }
