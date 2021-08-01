@@ -1,8 +1,9 @@
 package com.github.marfikus.jokeapp
 
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.ViewModel
 
-class ViewModel(private val model: Model) {
+class ViewModel(private val model: Model) : ViewModel() {
 
     private var dataCallback: DataCallback? = null
 
