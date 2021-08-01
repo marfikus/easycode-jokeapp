@@ -2,6 +2,8 @@ package com.github.marfikus.jokeapp
 
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class ViewModel(private val model: Model) : ViewModel() {
 
@@ -20,8 +22,11 @@ class ViewModel(private val model: Model) : ViewModel() {
         model.init(jokeCallback)
     }
 
-    fun getJoke() {
-        model.getJoke()
+    fun getJoke() = viewModelScope.launch {
+        val uiModel = model.getJoke()
+        dataCallback?.let {
+            uiModel.map(it)
+        }
     }
 
     fun changeJokeStatus() {
