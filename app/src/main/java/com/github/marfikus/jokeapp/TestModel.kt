@@ -1,5 +1,6 @@
 package com.github.marfikus.jokeapp
 
+/*
 class TestModel(resourceManager: ResourceManager) : Model {
 
     private var callback: JokeCallback? = null
@@ -35,4 +36,4 @@ class TestModel(resourceManager: ResourceManager) : Model {
     override fun chooseDataSource(cached: Boolean) {
         TODO("Not yet implemented")
     }
-}
+}*/

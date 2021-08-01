@@ -7,7 +7,7 @@ class BaseCacheDataSource : CacheDataSource {
     override suspend fun getJoke(): Result<Joke, Unit> {
         val realm = Realm.getDefaultInstance()
 
-        realm.let {
+        realm.use {
             val jokes = it.where(JokeRealmModel::class.java).findAll()
             if (jokes.isEmpty()) {
                 return Result.Error(Unit)
@@ -17,7 +17,7 @@ class BaseCacheDataSource : CacheDataSource {
                 }
             }
         }
-        realm.close()
+//        realm.close()
     }
 
     override fun addOrRemove(id: Int, joke: Joke, changeStatusCallback: ChangeStatusCallback) {

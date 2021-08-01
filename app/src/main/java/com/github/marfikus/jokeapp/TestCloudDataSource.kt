@@ -1,5 +1,6 @@
 package com.github.marfikus.jokeapp
 
+/*
 class TestCloudDataSource : CloudDataSource {
 
     private var count = 0
@@ -9,4 +10,4 @@ class TestCloudDataSource : CloudDataSource {
         callback.provide(joke.toJoke())
         count++
     }
-}
+}*/

@@ -1,5 +1,6 @@
 package com.github.marfikus.jokeapp
 
+/*
 class TestCacheDataSource : CacheDataSource {
 
     private val list = ArrayList<Pair<Int, Joke>>()
@@ -24,3 +25,4 @@ class TestCacheDataSource : CacheDataSource {
         }
     }
 }
+*/
