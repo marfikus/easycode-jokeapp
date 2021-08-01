@@ -2,7 +2,7 @@ package com.github.marfikus.jokeapp
 
 interface Model {
 
-    fun getJoke()
+    suspend fun getJoke(): JokeUiModel
 
     fun init(callback: JokeCallback)
 
