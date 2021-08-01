@@ -1,13 +1,15 @@
 package com.github.marfikus.jokeapp
 
+import android.util.Log
 import java.lang.Exception
 import java.net.UnknownHostException
 
 class BaseCloudDataSource(private val service: JokeService) : CloudDataSource {
 
-    override suspend fun getJoke(): Result<JokeServerModel, ErrorType> {
-        return try {
-            val result = service.getJoke()
+    override suspend fun getJoke(): Result<JokeServerModel, ErrorType> =
+        try {
+            val result: JokeServerModel = service.getJoke().execute().body()!!
+            Log.d("threadLogTag", "get joke cloud current thread ${Thread.currentThread().name}")
             Result.Success(result)
         } catch (e: Exception) {
             val errorType = if (e is UnknownHostException)
@@ -16,5 +18,4 @@ class BaseCloudDataSource(private val service: JokeService) : CloudDataSource {
                 ErrorType.SERVICE_UNAVAILABLE
             Result.Error(errorType)
         }
-    }
 }

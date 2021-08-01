@@ -1,5 +1,8 @@
 package com.github.marfikus.jokeapp
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 class BaseModel(
     private val cacheDataSource: CacheDataSource,
     private val cloudDataSource: CloudDataSource,
@@ -14,9 +17,9 @@ class BaseModel(
     private var cachedJoke: Joke? = null
     private var getJokeFromCache = false
 
-    override suspend fun getJoke(): JokeUiModel {
+    override suspend fun getJoke(): JokeUiModel = withContext(Dispatchers.IO) {
         if (getJokeFromCache) {
-            return when (val result = cacheDataSource.getJoke()) {
+            return@withContext when (val result = cacheDataSource.getJoke()) {
                 is Result.Success<Joke> -> result.data.let {
                     cachedJoke = it
                     it.toFavoriteJoke()
@@ -27,7 +30,7 @@ class BaseModel(
                 }
             }
         } else {
-            return when (val result = cloudDataSource.getJoke()) {
+            return@withContext when (val result = cloudDataSource.getJoke()) {
                 is Result.Success<JokeServerModel> -> {
                     result.data.toJoke().let {
                         cachedJoke = it
@@ -47,7 +50,9 @@ class BaseModel(
     }
 
     override suspend fun changeJokeStatus(): JokeUiModel? =
-        cachedJoke?.changeStatus(cacheDataSource)
+        withContext(Dispatchers.IO) {
+            cachedJoke?.changeStatus(cacheDataSource)
+        }
 
     override fun chooseDataSource(cached: Boolean) {
         getJokeFromCache = cached
