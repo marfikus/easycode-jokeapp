@@ -31,13 +31,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.init(object : DataCallback {
-            override fun provideText(text: String) = runOnUiThread {
+            override fun provideText(text: String) {
                 actionButton.isEnabled = true
                 progressBar.visibility = View.INVISIBLE
                 textView.text = text
             }
 
-            override fun provideIconRes(id: Int) = runOnUiThread {
+            override fun provideIconRes(id: Int) {
                 changeButton.setImageResource(id)
             }
         })
