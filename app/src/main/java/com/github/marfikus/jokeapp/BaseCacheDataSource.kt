@@ -36,7 +36,7 @@ class BaseCacheDataSource : CacheDataSource {
         }
     }
 
-    override fun exists(id: Int, callback: CacheDataSourceCallback) {
+    override fun exists(id: Int, callback: CheckExistCallback) {
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             callback.onResult(jokeRealm != null)

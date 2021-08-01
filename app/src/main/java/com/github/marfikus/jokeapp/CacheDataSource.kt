@@ -8,14 +8,14 @@ interface CacheDataSource {
 
     fun getJoke(jokeCachedCallback: JokeCachedCallback)
 
-    fun exists(id: Int, callback: CacheDataSourceCallback)
+    fun exists(id: Int, callback: CheckExistCallback)
 
     fun init()
 
     fun stop()
 }
 
-interface CacheDataSourceCallback {
+interface CheckExistCallback {
 
     fun onResult(exists: Boolean)
 }

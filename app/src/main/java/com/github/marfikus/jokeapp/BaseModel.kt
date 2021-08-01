@@ -36,7 +36,7 @@ class BaseModel(
                     cachedJokeModel = jokeModel
 
                     // check on favorite (if joke already in favorites)
-                    jokeModel.checkExistInCache(cacheDataSource, object : CacheDataSourceCallback {
+                    jokeModel.checkExistInCache(cacheDataSource, object : CheckExistCallback {
                         override fun onResult(exists: Boolean) {
                             if (exists) {
                                 jokeCallback?.provide(jokeModel.toFavoriteJoke())

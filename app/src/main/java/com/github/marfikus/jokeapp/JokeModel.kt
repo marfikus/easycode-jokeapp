@@ -28,7 +28,7 @@ class JokeModel(
         cacheDataSource.addOrRemove(id, this, callback)
     }
 
-    fun checkExistInCache(cacheDataSource: CacheDataSource, callback: CacheDataSourceCallback) {
+    fun checkExistInCache(cacheDataSource: CacheDataSource, callback: CheckExistCallback) {
         cacheDataSource.exists(id, callback)
     }
 }
