@@ -29,9 +29,11 @@ class ViewModel(private val model: Model) : ViewModel() {
         }
     }
 
-    fun changeJokeStatus() {
-        // TODO: 30.07.21 зачем ещё раз передавать колбек?
-        model.changeJokeStatus(jokeCallback)
+    fun changeJokeStatus() = viewModelScope.launch {
+        val uiModel = model.changeJokeStatus()
+        dataCallback?.let {
+            uiModel?.map(it)
+        }
     }
 
     fun chooseFavorites(favorites: Boolean) {

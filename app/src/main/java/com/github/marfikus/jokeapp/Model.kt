@@ -8,7 +8,7 @@ interface Model {
 
     fun clear()
 
-    fun changeJokeStatus(callback: JokeCallback)
+    suspend fun changeJokeStatus(): JokeUiModel?
 
     fun chooseDataSource(cached: Boolean)
 }
