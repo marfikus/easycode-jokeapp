@@ -4,15 +4,16 @@ import io.realm.Realm
 
 class BaseCacheDataSource : CacheDataSource {
 
-    override fun getJoke(jokeCachedCallback: JokeCachedCallback) {
+    override suspend fun getJoke(): Result<Joke, Unit> {
         val realm = Realm.getDefaultInstance()
-        realm.executeTransactionAsync {
+
+        realm.let {
             val jokes = it.where(JokeRealmModel::class.java).findAll()
             if (jokes.isEmpty()) {
-                jokeCachedCallback.fail()
+                return Result.Error(Unit)
             } else {
                 jokes.random().let { joke ->
-                    jokeCachedCallback.provide(joke.toJoke())
+                    return Result.Success(joke.toJoke())
                 }
             }
         }

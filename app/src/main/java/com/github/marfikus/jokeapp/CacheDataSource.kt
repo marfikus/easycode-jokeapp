@@ -1,7 +1,7 @@
 package com.github.marfikus.jokeapp
 
 interface CacheDataSource {
-    fun getJoke(jokeCachedCallback: JokeCachedCallback)
+    suspend fun getJoke(): Result<Joke, Unit>
     fun addOrRemove(id: Int, joke: Joke, changeStatusCallback: ChangeStatusCallback)
 }
 
