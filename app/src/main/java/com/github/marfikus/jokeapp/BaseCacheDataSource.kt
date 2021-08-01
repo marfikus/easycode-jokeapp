@@ -12,9 +12,7 @@ class BaseCacheDataSource : CacheDataSource {
                 jokeCachedCallback.fail()
             } else {
                 jokes.random().let { joke ->
-                    jokeCachedCallback.provide(
-                            Joke(joke.id, joke.type, joke.text, joke.punchLine)
-                    )
+                    jokeCachedCallback.provide(joke.toJoke())
                 }
             }
         }
