@@ -13,7 +13,7 @@ class BaseCacheDataSource : CacheDataSource {
             } else {
                 jokes.random().let { joke ->
                     jokeCachedCallback.provide(
-                            JokeServerModel(joke.id, joke.type, joke.text, joke.punchLine)
+                            Joke(joke.id, joke.type, joke.text, joke.punchLine)
                     )
                 }
             }
@@ -21,19 +21,16 @@ class BaseCacheDataSource : CacheDataSource {
         realm.close()
     }
 
-    override fun addOrRemove(id: Int,
-                             jokeServerModel: JokeServerModel,
-                             modelCallback: ModelCallback) {
-
+    override fun addOrRemove(id: Int, joke: Joke, modelCallback: ModelCallback) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransactionAsync {
             val jokeRealm = it.where(JokeRealm::class.java).equalTo("id", id).findFirst()
             if (jokeRealm == null) {
-                modelCallback.provide(jokeServerModel.toFavoriteJoke())
-                val newJoke = jokeServerModel.toJokeRealm()
+                modelCallback.provide(joke.toFavoriteJoke())
+                val newJoke = joke.toJokeRealm()
                 it.insert(newJoke)
             } else {
-                modelCallback.provide(jokeServerModel.toBaseJoke())
+                modelCallback.provide(joke.toBaseJoke())
                 jokeRealm.deleteFromRealm()
             }
         }

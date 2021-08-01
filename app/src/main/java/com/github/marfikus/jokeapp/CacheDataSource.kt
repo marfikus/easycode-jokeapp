@@ -6,6 +6,6 @@ interface CacheDataSource {
 }
 
 interface JokeCachedCallback {
-    fun provide(jokeServerModel: JokeServerModel)
+    fun provide(joke: Joke)
     fun fail()
 }

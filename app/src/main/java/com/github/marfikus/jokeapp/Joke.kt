@@ -1,28 +1,26 @@
 package com.github.marfikus.jokeapp
 
-import androidx.annotation.DrawableRes
+class Joke(
+    private val id: Int,
+    private val type: String,
+    private val text: String,
+    private val punchline: String
+) {
 
-abstract class Joke(private val text: String, private val punchline: String) {
+    fun toBaseJoke() = BaseJokeUiModel(text, punchline)
 
-    protected fun getJokeUi() = "$text\n$punchline"
+    fun toFavoriteJoke() = FavoriteJokeUiModel(text, punchline)
 
-    @DrawableRes
-    protected abstract fun getIconResId(): Int
-
-    fun map(callback: DataCallback) = callback.run {
-        provideText(getJokeUi())
-        provideIconRes(getIconResId())
+    fun toJokeRealm(): JokeRealm {
+        return JokeRealm().also {
+            it.id = id
+            it.type = type
+            it.text = text
+            it.punchLine = punchline
+        }
     }
-}
 
-class BaseJoke(text: String, punchline: String) : Joke(text, punchline) {
-    override fun getIconResId() = R.drawable.baseline_favorite_border_24
-}
-
-class FavoriteJoke(text: String, punchline: String) : Joke(text, punchline) {
-    override fun getIconResId() = R.drawable.baseline_favorite_24
-}
-
-class FailedJoke(text: String) : Joke(text, "") {
-    override fun getIconResId() = 0
+    fun change(cacheDataSource: CacheDataSource, modelCallback: ModelCallback) {
+        cacheDataSource.addOrRemove(id, this, modelCallback)
+    }
 }
