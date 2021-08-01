@@ -11,8 +11,8 @@ class Joke(
 
     fun toFavoriteJoke() = FavoriteJokeUiModel(text, punchline)
 
-    fun toJokeRealm(): JokeRealm {
-        return JokeRealm().also {
+    fun toJokeRealm(): JokeRealmModel {
+        return JokeRealmModel().also {
             it.id = id
             it.type = type
             it.text = text
