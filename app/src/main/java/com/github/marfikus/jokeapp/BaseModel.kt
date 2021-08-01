@@ -16,18 +16,16 @@ class BaseModel(
 
     override suspend fun getJoke(): JokeUiModel {
         if (getJokeFromCache) {
-            cacheDataSource.getJoke(object : JokeCachedCallback {
-                override fun provide(joke: Joke) {
-                    cachedJoke = joke
-                    jokeCallback?.provide(joke.toFavoriteJoke())
+            return when (val result = cacheDataSource.getJoke()) {
+                is Result.Success<Joke> -> result.data.let {
+                    cachedJoke = it
+                    it.toFavoriteJoke()
                 }
-
-                override fun fail() {
+                is Result.Error -> {
                     cachedJoke = null
-                    jokeCallback?.provide(FailedJokeUiModel(noCachedJokes.getMessage()))
+                    FailedJokeUiModel(noCachedJokes.getMessage())
                 }
-
-            })
+            }
         } else {
             return when (val result = cloudDataSource.getJoke()) {
                 is Result.Success<JokeServerModel> -> {
