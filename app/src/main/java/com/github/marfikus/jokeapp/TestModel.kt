@@ -11,9 +11,9 @@ class TestModel(resourceManager: ResourceManager) : Model {
         Thread {
             Thread.sleep(1000)
             when (count) {
-                0 -> callback?.provide(BaseJoke("testText", "testPunchline"))
-                1 -> callback?.provide(FavoriteJoke("testText Favorite", "testPunchline Favorite"))
-                2 -> callback?.provide(FailedJoke(serviceUnavailable.getMessage()))
+                0 -> callback?.provide(BaseJokeUiModel("testText", "testPunchline"))
+                1 -> callback?.provide(FavoriteJokeUiModel("testText Favorite", "testPunchline Favorite"))
+                2 -> callback?.provide(FailedJokeUiModel(serviceUnavailable.getMessage()))
             }
             count++
             if (count == 3) count = 0
