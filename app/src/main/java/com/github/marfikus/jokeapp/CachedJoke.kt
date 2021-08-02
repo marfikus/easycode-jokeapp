@@ -1,7 +1,6 @@
 package com.github.marfikus.jokeapp
 
-interface CachedJoke {
+interface CachedJoke : ChangeJoke {
     fun saveJoke(joke: Joke)
     fun clear()
-    suspend fun changeStatus(changeJokeStatus: ChangeJokeStatus)
 }
