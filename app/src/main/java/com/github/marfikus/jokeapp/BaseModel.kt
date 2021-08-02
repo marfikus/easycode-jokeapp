@@ -17,35 +17,12 @@ class BaseModel(
     private var getJokeFromCache = false
 
     override suspend fun getJoke(): JokeUiModel = withContext(Dispatchers.IO) {
-        if (getJokeFromCache) {
-            return@withContext when (val result = cacheDataSource.getJoke()) {
-                is Result.Success<Joke> -> result.data.let {
-                    cachedJoke = it
-                    it.toFavoriteJoke()
-                }
-                is Result.Error -> {
-                    cachedJoke = null
-                    FailedJokeUiModel(noCachedJokes.getMessage())
-                }
-            }
+        val resultHandler = if (getJokeFromCache) {
+            CacheResultHandler(cacheDataSource)
         } else {
-            return@withContext when (val result = cloudDataSource.getJoke()) {
-                is Result.Success<JokeServerModel> -> {
-                    result.data.toJoke().let {
-                        cachedJoke = it
-                        it.toBaseJoke()
-                    }
-                }
-                is Result.Error<ErrorType> -> {
-                    cachedJoke = null
-                    val failure = if (result.exception == ErrorType.NO_CONNECTION)
-                        noConnection
-                    else
-                        serviceUnavailable
-                    FailedJokeUiModel(failure.getMessage())
-                }
-            }
+            CloudResultHandler(cloudDataSource)
         }
+        return@withContext resultHandler.process()
     }
 
     override suspend fun changeJokeStatus(): JokeUiModel? =
