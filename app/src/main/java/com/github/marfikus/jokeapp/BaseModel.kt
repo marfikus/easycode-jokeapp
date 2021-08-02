@@ -56,4 +56,17 @@ class BaseModel(
     override fun chooseDataSource(cached: Boolean) {
         getJokeFromCache = cached
     }
+
+
+    private interface ResultHandler<S, E> {
+        fun handleResult(result: Result<S, E>): JokeUiModel
+    }
+
+    private abstract inner class BaseResultHandler<S, E>
+        (private val jokeDataFetcher: JokeDataFetcher<S, E>) : ResultHandler<S, E> {
+
+            suspend fun process(): JokeUiModel {
+                return handleResult(jokeDataFetcher.getJoke())
+            }
+        }
 }
