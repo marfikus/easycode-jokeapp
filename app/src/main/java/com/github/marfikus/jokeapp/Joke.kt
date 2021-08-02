@@ -20,6 +20,6 @@ class Joke(
         }
     }
 
-    suspend fun changeStatus(cacheDataSource: CacheDataSource) =
+    suspend fun changeStatus(cacheDataSource: ChangeJokeStatus) =
         cacheDataSource.addOrRemove(id, this)
 }
