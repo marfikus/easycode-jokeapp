@@ -5,34 +5,28 @@ import kotlinx.coroutines.withContext
 
 class BaseModel(
     private val cacheDataSource: CacheDataSource,
-    private val cloudDataSource: CloudDataSource,
+    cloudDataSource: CloudDataSource,
     private val resourceManager: ResourceManager
 ) : Model {
 
-    private val noConnection by lazy { NoConnection(resourceManager) }
-    private val serviceUnavailable by lazy { ServiceUnavailable(resourceManager) }
-    private val noCachedJokes by lazy { NoCachedJokes(resourceManager) }
-
     private var cachedJoke: Joke? = null
-    private var getJokeFromCache = false
+    private val cacheResultHandler by lazy { CacheResultHandler(cacheDataSource) }
+    private val cloudResultHandler = CloudResultHandler(cloudDataSource)
+
+    private var currentResultHandler: BaseResultHandler<*, *> = cloudResultHandler
+
+    override fun chooseDataSource(cached: Boolean) {
+        currentResultHandler = if (cached) cacheResultHandler else cloudResultHandler
+    }
 
     override suspend fun getJoke(): JokeUiModel = withContext(Dispatchers.IO) {
-        val resultHandler = if (getJokeFromCache) {
-            CacheResultHandler(cacheDataSource)
-        } else {
-            CloudResultHandler(cloudDataSource)
-        }
-        return@withContext resultHandler.process()
+        return@withContext currentResultHandler.process()
     }
 
     override suspend fun changeJokeStatus(): JokeUiModel? =
         withContext(Dispatchers.IO) {
             cachedJoke?.changeStatus(cacheDataSource)
         }
-
-    override fun chooseDataSource(cached: Boolean) {
-        getJokeFromCache = cached
-    }
 
 
     private interface ResultHandler<S, E> {
@@ -49,6 +43,9 @@ class BaseModel(
 
     private inner class CloudResultHandler(jokeDataFetcher: JokeDataFetcher<JokeServerModel, ErrorType>) :
             BaseResultHandler<JokeServerModel, ErrorType>(jokeDataFetcher) {
+
+        private val noConnection by lazy { NoConnection(resourceManager) }
+        private val serviceUnavailable by lazy { ServiceUnavailable(resourceManager) }
 
         override fun handleResult(result: Result<JokeServerModel, ErrorType>) = when (result) {
             is Result.Success<JokeServerModel> -> {
@@ -71,6 +68,8 @@ class BaseModel(
 
     private inner class CacheResultHandler(jokeDataFetcher: JokeDataFetcher<Joke, Unit>) :
             BaseResultHandler<Joke, Unit>(jokeDataFetcher) {
+
+        private val noCachedJokes by lazy { NoCachedJokes(resourceManager) }
 
         override fun handleResult(result: Result<Joke, Unit>) = when (result) {
             is Result.Success<Joke> -> result.data.let {
