@@ -1,28 +1,34 @@
 package com.github.marfikus.jokeapp
 
-/*
 class TestCacheDataSource : CacheDataSource {
 
-    private val list = ArrayList<Pair<Int, Joke>>()
+    private val map = HashMap<Int, Joke>()
+    private var success = true
+    private var nextJokeIdToGet = -1
 
-    override fun getJoke(jokeCachedCallback: JokeCachedCallback) {
-        if (list.isEmpty()) {
-            jokeCachedCallback.fail()
+    fun getNextJokeWithResult(success: Boolean, id: Int) {
+        this.success = success
+        nextJokeIdToGet = id
+    }
+
+    override suspend fun getJoke(): Result<Joke, Unit> {
+        return if (success) {
+            Result.Success(map[nextJokeIdToGet]!!)
         } else {
-            jokeCachedCallback.provide(list.random().second)
+            Result.Error(Unit)
         }
     }
 
-    override fun addOrRemove(id: Int, joke: Joke, changeStatusCallback: ChangeStatusCallback) {
-        val found = list.find { it.first == id }
-
-        if (found == null) {
-            changeStatusCallback.provide(joke.toFavoriteJoke())
-            list.add(Pair(id, joke))
+    override suspend fun addOrRemove(id: Int, joke: Joke): JokeUiModel {
+        return if (map.containsKey(id)) {
+            val result = map[id]!!.toBaseJoke()
+            map.remove(id)
+            result
         } else {
-            changeStatusCallback.provide(joke.toBaseJoke())
-            list.remove(found)
+            map[id] = joke
+            joke.toFavoriteJoke()
         }
     }
+
+    fun checkContainsId(id: Int) = map.containsKey(id)
 }
-*/
