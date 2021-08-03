@@ -1,25 +1,30 @@
 package com.github.marfikus.jokeapp
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class BaseViewModel(private val model: Model) : ViewModel() {
-
-    val liveData = MutableLiveData<Pair<String, Int>>()
+class BaseViewModel(
+    private val model: Model,
+    private val communication: Communication
+) : ViewModel() {
 
     fun getJoke() = viewModelScope.launch {
-        liveData.value = model.getJoke().getData()
+        communication.showData(model.getJoke().getData())
     }
 
     fun changeJokeStatus() = viewModelScope.launch {
         model.changeJokeStatus()?.let {
-            liveData.value = it.getData()
+            communication.showData(it.getData())
         }
     }
 
     fun chooseFavorites(favorites: Boolean) {
         model.chooseDataSource(favorites)
     }
+
+    fun observe(owner: LifecycleOwner, observer: Observer<Pair<String, Int>>) =
+        communication.observe(owner, observer)
 }
