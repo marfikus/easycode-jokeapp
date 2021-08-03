@@ -30,16 +30,11 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.changeJokeStatus()
         }
 
-        mainViewModel.init(object : DataCallback {
-            override fun provideText(text: String) {
-                actionButton.isEnabled = true
-                progressBar.visibility = View.INVISIBLE
-                textView.text = text
-            }
-
-            override fun provideIconRes(id: Int) {
-                changeButton.setImageResource(id)
-            }
+        mainViewModel.liveData.observe(this, { (text, drawableResId) ->
+            actionButton.isEnabled = true
+            progressBar.visibility = View.INVISIBLE
+            textView.text = text
+            changeButton.setImageResource(drawableResId)
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
@@ -52,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mainViewModel.clear()
         super.onDestroy()
     }
 }
