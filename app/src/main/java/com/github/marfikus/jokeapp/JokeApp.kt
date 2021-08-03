@@ -45,7 +45,8 @@ class JokeApp : MultiDexApplication() {
                     ServiceUnavailable(resourceManager)
                 ),
                 cachedJoke
-            )
+            ),
+            BaseCommunication()
         )
 
     }

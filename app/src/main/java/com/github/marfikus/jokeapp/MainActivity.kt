@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             baseViewModel.changeJokeStatus()
         }
 
-        baseViewModel.liveData.observe(this, { (text, drawableResId) ->
+        baseViewModel.observe(this, { (text, drawableResId) ->
             actionButton.isEnabled = true
             progressBar.visibility = View.INVISIBLE
             textView.text = text
@@ -44,9 +44,5 @@ class MainActivity : AppCompatActivity() {
 
         // fix: return joke from favorites after closing app
         baseViewModel.chooseFavorites(checkBox.isChecked)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }
