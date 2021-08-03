@@ -7,13 +7,13 @@ import android.widget.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = (application as JokeApp).viewModel
+        mainViewModel = (application as JokeApp).mainViewModel
         val actionButton = findViewById<Button>(R.id.actionButton)
         val textView = findViewById<TextView>(R.id.textView)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
@@ -22,15 +22,15 @@ class MainActivity : AppCompatActivity() {
         actionButton.setOnClickListener {
             actionButton.isEnabled = false
             progressBar.visibility = View.VISIBLE
-            viewModel.getJoke()
+            mainViewModel.getJoke()
         }
 
         val changeButton = findViewById<ImageButton>(R.id.changeButton)
         changeButton.setOnClickListener {
-            viewModel.changeJokeStatus()
+            mainViewModel.changeJokeStatus()
         }
 
-        viewModel.init(object : DataCallback {
+        mainViewModel.init(object : DataCallback {
             override fun provideText(text: String) {
                 actionButton.isEnabled = true
                 progressBar.visibility = View.INVISIBLE
@@ -44,15 +44,15 @@ class MainActivity : AppCompatActivity() {
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
         checkBox.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.chooseFavorites(isChecked)
+            mainViewModel.chooseFavorites(isChecked)
         }
 
         // fix: return joke from favorites after closing app
-        viewModel.chooseFavorites(checkBox.isChecked)
+        mainViewModel.chooseFavorites(checkBox.isChecked)
     }
 
     override fun onDestroy() {
-        viewModel.clear()
+        mainViewModel.clear()
         super.onDestroy()
     }
 }

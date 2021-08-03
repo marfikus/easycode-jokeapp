@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class ViewModel(private val model: Model) : ViewModel() {
+class MainViewModel(private val model: Model) : ViewModel() {
 
     private var dataCallback: DataCallback? = null
 

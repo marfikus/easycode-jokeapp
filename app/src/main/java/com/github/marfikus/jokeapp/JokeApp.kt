@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 //class JokeApp : Application() {
 class JokeApp : MultiDexApplication() {
 
-    lateinit var viewModel: ViewModel
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreate() {
         super.onCreate()
@@ -30,7 +30,7 @@ class JokeApp : MultiDexApplication() {
         val cacheDataSource = BaseCacheDataSource(BaseRealmProvider())
         val resourceManager = BaseResourceManager(this)
 
-        viewModel = ViewModel(
+        mainViewModel = MainViewModel(
             BaseModel(
                 cacheDataSource,
                 CacheResultHandler(
