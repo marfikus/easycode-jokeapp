@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val model: Model) : ViewModel() {
+class BaseViewModel(private val model: Model) : ViewModel() {
 
     val liveData = MutableLiveData<Pair<String, Int>>()
 
