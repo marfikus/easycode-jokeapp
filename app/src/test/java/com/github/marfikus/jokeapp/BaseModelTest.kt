@@ -11,7 +11,23 @@ class BaseModelTest {
     fun test_change_data_source(): Unit = runBlocking {
         val cacheDataSource = TestCacheDataSource()
         val cloudDataSource = TestCloudDataSource()
-        val model = BaseModel(cacheDataSource, cloudDataSource, TestResourceManager())
+        val cachedJoke = BaseCachedJoke()
+        val resourceManager = TestResourceManager()
+        val model = BaseModel(
+            cacheDataSource,
+            CacheResultHandler(
+                cachedJoke,
+                cacheDataSource,
+                NoCachedJokes(resourceManager)
+            ),
+            CloudResultHandler(
+                cachedJoke,
+                cloudDataSource,
+                NoConnection(resourceManager),
+                ServiceUnavailable(resourceManager)
+            ),
+            cachedJoke
+        )
         model.chooseDataSource(false)
         cloudDataSource.getJokeWithResult(true)
         val joke = model.getJoke()
