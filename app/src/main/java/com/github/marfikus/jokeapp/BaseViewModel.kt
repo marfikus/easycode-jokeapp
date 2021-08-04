@@ -15,13 +15,11 @@ class BaseViewModel(
 ) : ViewModel() {
 
     fun getJoke() = viewModelScope.launch(dispatcher) {
-        communication.showData(model.getJoke().getData())
+        model.getJoke().show(communication)
     }
 
     fun changeJokeStatus() = viewModelScope.launch(dispatcher) {
-        model.changeJokeStatus()?.let {
-            communication.showData(it.getData())
-        }
+        model.changeJokeStatus()?.show(communication)
     }
 
     fun chooseFavorites(favorites: Boolean) {
