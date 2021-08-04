@@ -28,6 +28,25 @@ class BaseViewModelTest {
         assertNotEquals(0, actualId)
     }
 
+    @ExperimentalCoroutinesApi
+    @Test
+    fun test_get_joke_from_cloud_fail(): Unit = runBlocking {
+        val model = TestModel()
+        val communication = TestCommunication()
+        val viewModel = BaseViewModel(model, communication, TestCoroutineDispatcher())
+
+        model.success = false
+        viewModel.chooseFavorites(false)
+        viewModel.getJoke()
+
+        val actualText = communication.text
+        val actualId = communication.id
+        val expectedText = "no connection\n"
+        val expectedId = 0
+        assertEquals(expectedText, actualText)
+        assertEquals(expectedId , actualId)
+    }
+
     private inner class TestModel : Model {
 
         private val cacheJokeUiModel = BaseJokeUiModel("cachedJokeText", "cachedJokePunchline")
@@ -66,7 +85,6 @@ class BaseViewModelTest {
         override fun chooseDataSource(cached: Boolean) {
             getFromCache = cached
         }
-
     }
 
     private inner class TestCommunication: Communication {
@@ -83,7 +101,5 @@ class BaseViewModelTest {
         override fun observe(owner: LifecycleOwner, observer: Observer<Pair<String, Int>>) {
             observeCount++
         }
-
-
     }
 }
