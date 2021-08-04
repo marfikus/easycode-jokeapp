@@ -41,7 +41,7 @@ class BaseViewModelTest {
 
         val actualText = communication.text
         val actualId = communication.id
-        val expectedText = "no connection\n"
+        val expectedText = "no connection"
         val expectedId = 0
         assertEquals(expectedText, actualText)
         assertEquals(expectedId , actualId)

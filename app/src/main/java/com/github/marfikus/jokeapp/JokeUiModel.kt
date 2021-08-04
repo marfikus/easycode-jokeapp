@@ -3,7 +3,7 @@ package com.github.marfikus.jokeapp
 import androidx.annotation.DrawableRes
 
 abstract class JokeUiModel(private val text: String, private val punchline: String) {
-    private fun getText() = "$text\n$punchline"
+    protected open fun getText() = "$text\n$punchline"
 
     @DrawableRes
     protected abstract fun getIconResId(): Int
@@ -19,6 +19,7 @@ class FavoriteJokeUiModel(text: String, punchline: String) : JokeUiModel(text, p
     override fun getIconResId() = R.drawable.baseline_favorite_24
 }
 
-class FailedJokeUiModel(text: String) : JokeUiModel(text, "") {
+class FailedJokeUiModel(private val text: String) : JokeUiModel(text, "") {
+    override fun getText() = text
     override fun getIconResId() = 0
 }
