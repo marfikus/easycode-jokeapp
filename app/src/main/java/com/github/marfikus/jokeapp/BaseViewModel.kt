@@ -68,17 +68,15 @@ class BaseViewModel(
     }
 }
 
-interface ShowText {
-    fun show(text: String)
+interface Show<T> {
+    fun show(arg: T)
 }
 
-interface ShowImage {
-    fun show(@DrawableRes id: Int)
-}
+interface ShowText : Show<String>
 
-interface ShowView {
-    fun show(show: Boolean)
-}
+interface ShowImage : Show<Int>
+
+interface ShowView : Show<Boolean>
 
 interface EnableView {
     fun enable(enable: Boolean)
