@@ -29,7 +29,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         baseViewModel.observe(this, { state ->
-            state.show(progressBar, actionButton, textView, changeButton)
+            state.show(
+                object : ShowView {
+                    override fun show(show: Boolean) {
+                        progressBar.visibility = if (show) View.VISIBLE else View.INVISIBLE
+                    }
+                },
+                object : EnableView {
+                    override fun enable(enable: Boolean) {
+                        actionButton.isEnabled = enable
+                    }
+
+                },
+                object : ShowText {
+                    override fun show(text: String) {
+                        textView.text = text
+                    }
+
+                },
+                object : ShowImage {
+                    override fun show(id: Int) {
+                        changeButton.setImageResource(id)
+                    }
+
+                }
+            )
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)

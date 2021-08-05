@@ -38,36 +38,52 @@ class BaseViewModel(
 
     sealed class State {
         abstract fun show(
-            progress: View,
-            button: Button,
-            textView: TextView,
-            imageButton: ImageButton
+            progress: ShowView,
+            button: EnableView,
+            textView: ShowText,
+            imageButton: ShowImage
         )
 
         object Progress: State() {
             override fun show(
-                progress: View,
-                button: Button,
-                textView: TextView,
-                imageButton: ImageButton
+                progress: ShowView,
+                button: EnableView,
+                textView: ShowText,
+                imageButton: ShowImage
             ) {
-                progress.visibility = View.VISIBLE
-                button.isEnabled = false
+                progress.show(true)
+                button.enable(false)
             }
         }
 
         data class Initial(val text: String, @DrawableRes val id: Int) : State() {
             override fun show(
-                progress: View,
-                button: Button,
-                textView: TextView,
-                imageButton: ImageButton
+                progress: ShowView,
+                button: EnableView,
+                textView: ShowText,
+                imageButton: ShowImage
             ) {
-                progress.visibility = View.INVISIBLE
-                button.isEnabled = true
-                textView.text = text
-                imageButton.setImageResource(id)
+                progress.show(false)
+                button.enable(true)
+                textView.show(text)
+                imageButton.show(id)
             }
         }
     }
+}
+
+interface ShowText {
+    fun show(text: String)
+}
+
+interface ShowImage {
+    fun show(@DrawableRes id: Int)
+}
+
+interface ShowView {
+    fun show(show: Boolean)
+}
+
+interface EnableView {
+    fun enable(enable: Boolean)
 }
