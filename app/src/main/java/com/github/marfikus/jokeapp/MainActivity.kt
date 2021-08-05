@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         baseViewModel = (application as JokeApp).baseViewModel
-        val actionButton = findViewById<Button>(R.id.actionButton)
+        val actionButton = findViewById<CorrectButton>(R.id.actionButton)
         val textView = findViewById<CorrectTextView>(R.id.textView)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.INVISIBLE
@@ -35,12 +35,7 @@ class MainActivity : AppCompatActivity() {
                         progressBar.visibility = if (show) View.VISIBLE else View.INVISIBLE
                     }
                 },
-                object : EnableView {
-                    override fun enable(enable: Boolean) {
-                        actionButton.isEnabled = enable
-                    }
-
-                },
+                actionButton,
                 textView,
                 object : ShowImage {
                     override fun show(id: Int) {
