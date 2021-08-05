@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <com.github.marfikus.jokeapp.CorrectTextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_weight="1"

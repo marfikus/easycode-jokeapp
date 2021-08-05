@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         baseViewModel = (application as JokeApp).baseViewModel
         val actionButton = findViewById<Button>(R.id.actionButton)
-        val textView = findViewById<TextView>(R.id.textView)
+        val textView = findViewById<CorrectTextView>(R.id.textView)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.INVISIBLE
 
@@ -41,12 +41,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 },
-                object : ShowText {
-                    override fun show(text: String) {
-                        textView.text = text
-                    }
-
-                },
+                textView,
                 object : ShowImage {
                     override fun show(id: Int) {
                         changeButton.setImageResource(id)
