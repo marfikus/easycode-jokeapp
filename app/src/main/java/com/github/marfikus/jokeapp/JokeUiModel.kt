@@ -8,7 +8,9 @@ abstract class JokeUiModel(private val text: String, private val punchline: Stri
     @DrawableRes
     protected abstract fun getIconResId(): Int
 
-    fun show(communication: Communication) = communication.showData(Pair(getText(), getIconResId()))
+    fun show(communication: Communication) = communication.showState(
+        BaseViewModel.State.Initial(getText(), getIconResId())
+    )
 }
 
 class BaseJokeUiModel(text: String, punchline: String) : JokeUiModel(text, punchline) {

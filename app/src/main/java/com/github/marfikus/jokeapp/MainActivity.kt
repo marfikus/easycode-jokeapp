@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.INVISIBLE
 
         actionButton.setOnClickListener {
-            actionButton.isEnabled = false
-            progressBar.visibility = View.VISIBLE
             baseViewModel.getJoke()
         }
 
@@ -30,11 +28,8 @@ class MainActivity : AppCompatActivity() {
             baseViewModel.changeJokeStatus()
         }
 
-        baseViewModel.observe(this, { (text, drawableResId) ->
-            actionButton.isEnabled = true
-            progressBar.visibility = View.INVISIBLE
-            textView.text = text
-            changeButton.setImageResource(drawableResId)
+        baseViewModel.observe(this, { state ->
+            state.show(progressBar, actionButton, textView, changeButton)
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)

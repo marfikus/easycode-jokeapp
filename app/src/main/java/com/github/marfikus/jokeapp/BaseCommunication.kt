@@ -6,13 +6,13 @@ import androidx.lifecycle.Observer
 
 class BaseCommunication : Communication {
 
-    private val liveData = MutableLiveData<Pair<String, Int>>()
+    private val liveData = MutableLiveData<BaseViewModel.State>()
 
-    override fun showData(data: Pair<String, Int>) {
-        liveData.value = data
+    override fun showState(state: BaseViewModel.State) {
+        liveData.value = state
     }
 
-    override fun observe(owner: LifecycleOwner, observer: Observer<Pair<String, Int>>) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<BaseViewModel.State>) {
         liveData.observe(owner, observer)
     }
 }

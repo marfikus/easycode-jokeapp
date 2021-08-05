@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 
 interface Communication {
 
-    fun showData(data: Pair<String, Int>)
+    fun showState(state: BaseViewModel.State)
 
-    fun observe(owner: LifecycleOwner, observer: Observer<Pair<String, Int>>)
+    fun observe(owner: LifecycleOwner, observer: Observer<BaseViewModel.State>)
 }
