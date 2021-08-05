@@ -29,12 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         baseViewModel.observe(this, { state ->
-            state.show(
-                progressBar,
-                actionButton,
-                textView,
-                changeButton
-            )
+            state.show(progressBar, actionButton, textView, changeButton)
         })
 
         val checkBox = findViewById<CheckBox>(R.id.checkBox)
