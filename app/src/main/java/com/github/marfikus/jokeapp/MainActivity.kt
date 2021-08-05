@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             baseViewModel.getJoke()
         }
 
-        val changeButton = findViewById<ImageButton>(R.id.changeButton)
+        val changeButton = findViewById<CorrectImageButton>(R.id.changeButton)
         changeButton.setOnClickListener {
             baseViewModel.changeJokeStatus()
         }
@@ -37,12 +37,7 @@ class MainActivity : AppCompatActivity() {
                 },
                 actionButton,
                 textView,
-                object : ShowImage {
-                    override fun show(id: Int) {
-                        changeButton.setImageResource(id)
-                    }
-
-                }
+                changeButton
             )
         })
 
