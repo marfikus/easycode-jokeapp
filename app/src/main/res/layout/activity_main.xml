@@ -40,7 +40,7 @@
             android:contentDescription="@string/icon_add_to_favorite" />
     </LinearLayout>
 
-    <ProgressBar
+    <com.github.marfikus.jokeapp.CorrectProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

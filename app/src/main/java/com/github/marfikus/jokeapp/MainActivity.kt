@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         baseViewModel = (application as JokeApp).baseViewModel
         val actionButton = findViewById<CorrectButton>(R.id.actionButton)
         val textView = findViewById<CorrectTextView>(R.id.textView)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val progressBar = findViewById<CorrectProgressBar>(R.id.progressBar)
         progressBar.visibility = View.INVISIBLE
 
         actionButton.setOnClickListener {
@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         baseViewModel.observe(this, { state ->
             state.show(
-                object : ShowView {
-                    override fun show(show: Boolean) {
-                        progressBar.visibility = if (show) View.VISIBLE else View.INVISIBLE
-                    }
-                },
+                progressBar,
                 actionButton,
                 textView,
                 changeButton
