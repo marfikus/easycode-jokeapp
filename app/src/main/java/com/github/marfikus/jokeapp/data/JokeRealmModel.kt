@@ -11,6 +11,8 @@ open class JokeRealmModel : RealmObject() {
     var punchline: String = ""
     var type: String = ""
 
+    fun toJokeDataModel() = JokeDataModel(id, type, text, punchline)
+
     fun toJoke() = Joke(
         id = id,
         type = type,

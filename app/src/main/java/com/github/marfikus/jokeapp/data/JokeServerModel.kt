@@ -14,6 +14,8 @@ data class JokeServerModel(
     private val punchline: String
 ) {
 
+    fun toJokeDataModel() = JokeDataModel(id, type, text, punchline)
+
     fun toJoke() = Joke(
         id = id,
         type = type,
