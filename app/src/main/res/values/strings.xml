@@ -6,4 +6,5 @@
     <string name="show_favorite_joke">Show favorite joke</string>
     <string name="icon_add_to_favorite">icon add joke to favorite</string>
     <string name="no_cached_jokes">No favorite jokes! Add one by heart icon</string>
+    <string name="generic_fail_message">generic fail message</string>
 </resources>

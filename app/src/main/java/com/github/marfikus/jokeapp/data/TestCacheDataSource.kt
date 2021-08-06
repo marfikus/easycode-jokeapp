@@ -1,6 +1,6 @@
 package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.Joke
+import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.JokeUiModel
 
 class TestCacheDataSource : CacheDataSource {

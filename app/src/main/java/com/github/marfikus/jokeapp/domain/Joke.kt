@@ -1,5 +1,9 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.domain
 
+import com.github.marfikus.jokeapp.BaseJokeUiModel
+import com.github.marfikus.jokeapp.FailedJokeUiModel
+import com.github.marfikus.jokeapp.FavoriteJokeUiModel
+import com.github.marfikus.jokeapp.JokeUiModel
 import com.github.marfikus.jokeapp.core.Mapper
 
 sealed class Joke : Mapper<JokeUiModel> {
