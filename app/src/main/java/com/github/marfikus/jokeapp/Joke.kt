@@ -1,27 +1,26 @@
 package com.github.marfikus.jokeapp
 
-import com.github.marfikus.jokeapp.data.JokeRealmModel
+import com.github.marfikus.jokeapp.core.Mapper
 
-class Joke(
-    private val id: Int,
-    private val type: String,
-    private val text: String,
-    private val punchline: String
-) : ChangeJoke {
-
-    fun toBaseJoke() = BaseJokeUiModel(text, punchline)
-
-    fun toFavoriteJoke() = FavoriteJokeUiModel(text, punchline)
-
-    fun toJokeRealm(): JokeRealmModel {
-        return JokeRealmModel().also {
-            it.id = id
-            it.type = type
-            it.text = text
-            it.punchline = punchline
+sealed class Joke : Mapper<JokeUiModel> {
+    class Success(
+            private val text: String,
+            private val punchline: String,
+            private val favorite: Boolean
+    ) : Joke() {
+        override fun to(): JokeUiModel {
+            return if (favorite) {
+                FavoriteJokeUiModel(text, punchline)
+            } else {
+                BaseJokeUiModel(text, punchline)
+            }
         }
     }
 
-    override suspend fun changeStatus(changeJokeStatus: ChangeJokeStatus) =
-        changeJokeStatus.addOrRemove(id, this)
+    class Failed(private val text: String) : Joke() {
+        override fun to(): JokeUiModel {
+            return FailedJokeUiModel(text)
+        }
+
+    }
 }
