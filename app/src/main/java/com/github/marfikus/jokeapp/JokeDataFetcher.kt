@@ -1,7 +1,7 @@
 package com.github.marfikus.jokeapp
 
-import com.github.marfikus.jokeapp.data.Result
+import com.github.marfikus.jokeapp.data.JokeDataModel
 
-interface JokeDataFetcher<S, E> {
-    suspend fun getJoke(): Result<S, E>
+interface JokeDataFetcher {
+    suspend fun getJoke(): JokeDataModel
 }
