@@ -2,28 +2,36 @@ package com.github.marfikus.jokeapp
 
 import com.github.marfikus.jokeapp.*
 import com.github.marfikus.jokeapp.data.CacheDataSource
+import com.github.marfikus.jokeapp.data.CloudDataSource
+import com.github.marfikus.jokeapp.data.JokeDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class BaseJokeRepository(
         private val cacheDataSource: CacheDataSource,
-        private val cacheResultHandler: CacheResultHandler,
-        private val cloudResultHandler: CloudResultHandler,
+        private val cloudDataSource: CloudDataSource,
         private val cachedJoke: CachedJoke
 ) : JokeRepository {
 
-    private var currentResultHandler: BaseResultHandler<*, *> = cloudResultHandler
+    private var currentDataSource: JokeDataFetcher = cloudDataSource
 
     override fun chooseDataSource(cached: Boolean) {
-        currentResultHandler = if (cached) cacheResultHandler else cloudResultHandler
+        currentDataSource = if (cached) cacheDataSource else cloudDataSource
     }
 
-    override suspend fun getJoke(): JokeUiModel = withContext(Dispatchers.IO) {
-        return@withContext currentResultHandler.process()
-    }
-
-    override suspend fun changeJokeStatus(): JokeUiModel? =
-        withContext(Dispatchers.IO) {
-            cachedJoke.changeStatus(cacheDataSource)
+    override suspend fun getJoke(): JokeDataModel = withContext(Dispatchers.IO) {
+//        return@withContext currentResultHandler.process()
+        try {
+            val joke = currentDataSource.getJoke()
+            cachedJoke.saveJoke(joke)
+            return@withContext joke
+        } catch (e: Exception) {
+            cachedJoke.clear()
+            throw e
         }
+    }
+
+    override suspend fun changeJokeStatus(): JokeDataModel? =
+            cachedJoke.changeStatus(cacheDataSource)
 }

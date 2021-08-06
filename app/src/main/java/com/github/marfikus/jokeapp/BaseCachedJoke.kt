@@ -1,10 +1,12 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.JokeDataModel
+
 class BaseCachedJoke : CachedJoke {
 
-    private var cached: Joke? = null
+    private var cached: JokeDataModel? = null
 
-    override fun saveJoke(joke: Joke) {
+    override fun saveJoke(joke: JokeDataModel) {
         cached = joke
     }
 
@@ -12,7 +14,7 @@ class BaseCachedJoke : CachedJoke {
         cached = null
     }
 
-    override suspend fun changeStatus(changeJokeStatus: ChangeJokeStatus): JokeUiModel? {
+    override suspend fun changeStatus(changeJokeStatus: ChangeJokeStatus): JokeDataModel? {
         return cached?.changeStatus(changeJokeStatus)
     }
 }
