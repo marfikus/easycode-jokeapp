@@ -1,22 +1,20 @@
 package com.github.marfikus.jokeapp.data
 
-import android.util.Log
-import com.github.marfikus.jokeapp.ErrorType
+import com.github.marfikus.jokeapp.domain.NoConnectionException
+import com.github.marfikus.jokeapp.domain.ServiceUnavailableException
 import java.lang.Exception
 import java.net.UnknownHostException
 
 class BaseCloudDataSource(private val service: JokeService) : CloudDataSource {
 
-    override suspend fun getJoke(): Result<JokeServerModel, ErrorType> =
+    override suspend fun getJoke(): JokeDataModel {
         try {
-            val result: JokeServerModel = service.getJoke().execute().body()!!
-            Log.d("threadLogTag", "get joke cloud current thread ${Thread.currentThread().name}")
-            Result.Success(result)
+            return service.getJoke().execute().body()!!.to()
         } catch (e: Exception) {
-            val errorType = if (e is UnknownHostException)
-                ErrorType.NO_CONNECTION
+            if (e is UnknownHostException)
+                throw NoConnectionException()
             else
-                ErrorType.SERVICE_UNAVAILABLE
-            Result.Error(errorType)
+                throw ServiceUnavailableException()
         }
+    }
 }
