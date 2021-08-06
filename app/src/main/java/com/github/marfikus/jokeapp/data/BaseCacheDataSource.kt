@@ -1,27 +1,23 @@
 package com.github.marfikus.jokeapp.data
 
-import android.util.Log
 import com.github.marfikus.jokeapp.*
+import com.github.marfikus.jokeapp.domain.NoCachedJokesException
 
 class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataSource {
 
-    override suspend fun getJoke(): Result<Joke, Unit> {
+    override suspend fun getJoke(): JokeDataModel {
         realmProvider.provide().use {
-            Log.d("threadLogTag", "getJoke cache current thread ${Thread.currentThread().name}")
             val jokes = it.where(JokeRealmModel::class.java).findAll()
             if (jokes.isEmpty()) {
-                return Result.Error(Unit)
+                throw NoCachedJokesException()
             } else {
-                jokes.random().let { joke ->
-                    return Result.Success(joke.toJoke())
-                }
+                return jokes.random().to()
             }
         }
     }
 
     override suspend fun addOrRemove(id: Int, joke: Joke): JokeUiModel =
         realmProvider.provide().use {
-            Log.d("threadLogTag", "addOrRemove current thread ${Thread.currentThread().name}")
             val jokeRealm =
                 it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
             return if (jokeRealm == null) {
