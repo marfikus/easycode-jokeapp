@@ -1,5 +1,7 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.Result
+
 class CacheResultHandler(
     private val cachedJoke: CachedJoke,
     jokeDataFetcher: JokeDataFetcher<Joke, Unit>,

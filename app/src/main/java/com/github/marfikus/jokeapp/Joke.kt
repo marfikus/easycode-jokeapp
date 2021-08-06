@@ -1,5 +1,7 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.JokeRealmModel
+
 class Joke(
     private val id: Int,
     private val type: String,

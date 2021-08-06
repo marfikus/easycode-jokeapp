@@ -1,14 +1,16 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.*
+import com.github.marfikus.jokeapp.data.CacheDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class BaseModel(
-    private val cacheDataSource: CacheDataSource,
-    private val cacheResultHandler: CacheResultHandler,
-    private val cloudResultHandler: CloudResultHandler,
-    private val cachedJoke: CachedJoke
-) : Model {
+class BaseJokeRepository(
+        private val cacheDataSource: CacheDataSource,
+        private val cacheResultHandler: CacheResultHandler,
+        private val cloudResultHandler: CloudResultHandler,
+        private val cachedJoke: CachedJoke
+) : JokeRepository {
 
     private var currentResultHandler: BaseResultHandler<*, *> = cloudResultHandler
 

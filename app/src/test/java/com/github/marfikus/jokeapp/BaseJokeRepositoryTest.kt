@@ -1,11 +1,13 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.TestCacheDataSource
+import com.github.marfikus.jokeapp.data.TestCloudDataSource
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 import org.junit.Assert.*
 
-class BaseModelTest {
+class BaseJokeRepositoryTest {
 
     @Test
     fun test_change_data_source(): Unit = runBlocking {
@@ -13,7 +15,7 @@ class BaseModelTest {
         val cloudDataSource = TestCloudDataSource()
         val cachedJoke = BaseCachedJoke()
         val resourceManager = TestResourceManager()
-        val model = BaseModel(
+        val model = BaseJokeRepository(
             cacheDataSource,
             CacheResultHandler(
                 cachedJoke,

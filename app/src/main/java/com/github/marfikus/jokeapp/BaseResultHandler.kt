@@ -1,5 +1,7 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.Result
+
 abstract class BaseResultHandler<S, E>
     (private val jokeDataFetcher: JokeDataFetcher<S, E>) {
 

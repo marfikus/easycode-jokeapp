@@ -1,4 +1,4 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
 import io.realm.Realm
 

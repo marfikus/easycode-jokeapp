@@ -1,9 +1,5 @@
 package com.github.marfikus.jokeapp
 
-import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -14,22 +10,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BaseViewModel(
-    private val model: Model,
-    private val communication: Communication,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
+        private val jokeRepository: JokeRepository,
+        private val communication: Communication,
+        private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     fun getJoke() = viewModelScope.launch(dispatcher) {
         communication.showState(State.Progress)
-        model.getJoke().show(communication)
+        jokeRepository.getJoke().show(communication)
     }
 
     fun changeJokeStatus() = viewModelScope.launch(dispatcher) {
-        model.changeJokeStatus()?.show(communication)
+        jokeRepository.changeJokeStatus()?.show(communication)
     }
 
     fun chooseFavorites(favorites: Boolean) {
-        model.chooseDataSource(favorites)
+        jokeRepository.chooseDataSource(favorites)
     }
 
     fun observe(owner: LifecycleOwner, observer: Observer<State>) =

@@ -1,4 +1,4 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
 import retrofit2.Call
 import retrofit2.http.GET

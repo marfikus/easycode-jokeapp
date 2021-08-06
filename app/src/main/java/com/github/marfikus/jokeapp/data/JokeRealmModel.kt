@@ -1,5 +1,6 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
+import com.github.marfikus.jokeapp.Joke
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 

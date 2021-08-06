@@ -1,6 +1,7 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
 import android.util.Log
+import com.github.marfikus.jokeapp.*
 
 class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataSource {
 

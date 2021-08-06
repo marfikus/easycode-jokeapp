@@ -1,6 +1,7 @@
 package com.github.marfikus.jokeapp
 
 import androidx.multidex.MultiDexApplication
+import com.github.marfikus.jokeapp.data.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import retrofit2.Retrofit
@@ -31,7 +32,7 @@ class JokeApp : MultiDexApplication() {
         val resourceManager = BaseResourceManager(this)
 
         baseViewModel = BaseViewModel(
-            BaseModel(
+            BaseJokeRepository(
                 cacheDataSource,
                 CacheResultHandler(
                     cachedJoke,

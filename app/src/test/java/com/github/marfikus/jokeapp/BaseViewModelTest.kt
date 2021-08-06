@@ -13,7 +13,7 @@ class BaseViewModelTest {
     @ExperimentalCoroutinesApi
     @Test
     fun test_get_joke_from_cloud_success(): Unit = runBlocking {
-        val model = TestModel()
+        val model = TestJokeRepository()
         val communication = TestCommunication()
         val viewModel = BaseViewModel(model, communication, TestCoroutineDispatcher())
 
@@ -31,7 +31,7 @@ class BaseViewModelTest {
     @ExperimentalCoroutinesApi
     @Test
     fun test_get_joke_from_cloud_fail(): Unit = runBlocking {
-        val model = TestModel()
+        val model = TestJokeRepository()
         val communication = TestCommunication()
         val viewModel = BaseViewModel(model, communication, TestCoroutineDispatcher())
 
@@ -47,7 +47,7 @@ class BaseViewModelTest {
         assertEquals(expectedId , actualId)
     }
 
-    private inner class TestModel : Model {
+    private inner class TestJokeRepository : JokeRepository {
 
         private val cacheJokeUiModel = BaseJokeUiModel("cachedJokeText", "cachedJokePunchline")
         private val cacheJokeFailure = FailedJokeUiModel("cacheFailed")
