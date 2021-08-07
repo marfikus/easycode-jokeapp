@@ -10,14 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BaseViewModel(
-        private val jokeRepository: JokeRepository,
+        private val interactor: JokeInteractor,
         private val communication: Communication,
         private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     fun getJoke() = viewModelScope.launch(dispatcher) {
         communication.showState(State.Progress)
-        jokeRepository.getJoke().show(communication)
+        interactor.getJoke().to().show(communication)
     }
 
     fun changeJokeStatus() = viewModelScope.launch(dispatcher) {
@@ -33,6 +33,14 @@ class BaseViewModel(
 
 
     sealed class State {
+        protected abstract val type: Int
+        companion object {
+            const val INITIAL = 0
+            const val PROGRESS = 1
+            const val FAILED = 2
+        }
+        fun isType(type: Int): Boolean = this.type == type
+
         fun show(progress: ShowView, button: EnableView, textView: ShowText,
                  imageButton: ShowImage
         ) {
@@ -50,7 +58,7 @@ class BaseViewModel(
             }
         }
 
-        data class Initial(val text: String, @DrawableRes val id: Int) : State() {
+        abstract class Info(private val text: String, @DrawableRes private val id: Int) : State() {
             override fun show(progress: ShowView, button: EnableView) {
                 progress.show(false)
                 button.enable(true)
@@ -60,6 +68,13 @@ class BaseViewModel(
                 textView.show(text)
                 imageButton.show(id)
             }
+        }
+
+        class Initial(private val text: String, @DrawableRes private val id: Int) : Info(text, id) {
+            override val type = INITIAL
+        }
+        class Failed(private val text: String, @DrawableRes private val id: Int) : Info(text, id) {
+            override val type = FAILED
         }
     }
 }

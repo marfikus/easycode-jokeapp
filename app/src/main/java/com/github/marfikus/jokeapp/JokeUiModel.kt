@@ -8,7 +8,7 @@ abstract class JokeUiModel(private val text: String, private val punchline: Stri
     @DrawableRes
     protected abstract fun getIconResId(): Int
 
-    fun show(communication: Communication) = communication.showState(
+    open fun show(communication: Communication) = communication.showState(
         BaseViewModel.State.Initial(getText(), getIconResId())
     )
 }
@@ -24,4 +24,7 @@ class FavoriteJokeUiModel(text: String, punchline: String) : JokeUiModel(text, p
 class FailedJokeUiModel(private val text: String) : JokeUiModel(text, "") {
     override fun getText() = text
     override fun getIconResId() = 0
+    override fun show(communication: Communication) = communication.showState(
+            BaseViewModel.State.Failed(getText(), getIconResId())
+    )
 }
