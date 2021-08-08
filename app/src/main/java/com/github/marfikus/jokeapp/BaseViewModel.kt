@@ -21,7 +21,8 @@ class BaseViewModel(
     }
 
     fun changeJokeStatus() = viewModelScope.launch(dispatcher) {
-        jokeRepository.changeJokeStatus()?.show(communication)
+        if (communication.isState(State.INITIAL))
+            interactor.changeFavorites().to().show(communication)
     }
 
     fun chooseFavorites(favorites: Boolean) {

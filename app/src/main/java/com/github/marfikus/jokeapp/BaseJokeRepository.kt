@@ -33,5 +33,5 @@ class BaseJokeRepository(
     }
 
     override suspend fun changeJokeStatus(): JokeDataModel? =
-            cachedJoke.changeStatus(cacheDataSource)
+            cachedJoke.change(cacheDataSource)
 }

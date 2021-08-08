@@ -1,9 +1,6 @@
 package com.github.marfikus.jokeapp.domain
 
-import com.github.marfikus.jokeapp.BaseJokeUiModel
-import com.github.marfikus.jokeapp.FailedJokeUiModel
-import com.github.marfikus.jokeapp.FavoriteJokeUiModel
-import com.github.marfikus.jokeapp.JokeUiModel
+import com.github.marfikus.jokeapp.*
 import com.github.marfikus.jokeapp.core.Mapper
 
 sealed class Joke : Mapper<JokeUiModel> {
@@ -21,9 +18,9 @@ sealed class Joke : Mapper<JokeUiModel> {
         }
     }
 
-    class Failed(private val text: String) : Joke() {
+    class Failed(private val failure: JokeFailure) : Joke() {
         override fun to(): JokeUiModel {
-            return FailedJokeUiModel(text)
+            return FailedJokeUiModel(failure.getMessage())
         }
 
     }

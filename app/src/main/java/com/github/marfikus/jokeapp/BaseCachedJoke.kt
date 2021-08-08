@@ -14,7 +14,7 @@ class BaseCachedJoke : CachedJoke {
         cached = null
     }
 
-    override suspend fun changeStatus(changeJokeStatus: ChangeJokeStatus): JokeDataModel? {
-        return cached?.changeStatus(changeJokeStatus)
+    override suspend fun change(changeJokeStatus: ChangeJokeStatus): JokeDataModel? {
+        return cached?.change(changeJokeStatus)
     }
 }
