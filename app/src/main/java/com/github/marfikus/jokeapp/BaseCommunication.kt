@@ -17,6 +17,6 @@ class BaseCommunication : Communication {
     }
 
     override fun isState(type: Int): Boolean {
-        liveData.value?.isType(type) ?: false
+        return liveData.value?.isType(type) ?: false
     }
 }
