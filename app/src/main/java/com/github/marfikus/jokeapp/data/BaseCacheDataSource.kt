@@ -1,8 +1,9 @@
 package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.*
-import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.domain.NoCachedJokesException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataSource {
 
@@ -17,21 +18,24 @@ class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataS
         }
     }
 
-    override suspend fun addOrRemove(id: Int, joke: Joke): JokeUiModel =
-        realmProvider.provide().use {
-            val jokeRealm =
-                it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
-            return if (jokeRealm == null) {
-                it.executeTransaction { transaction ->
-                    val newJoke = joke.toJokeRealm()
-                    transaction.insert(newJoke)
+    override suspend fun addOrRemove(id: Int, joke: JokeDataModel): JokeDataModel =
+        withContext(Dispatchers.IO) {
+            realmProvider.provide().use {
+                val jokeRealm =
+                        it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
+                return@withContext if (jokeRealm == null) {
+                    it.executeTransaction { transaction ->
+                        val newJoke = joke.toRealm()
+                        transaction.insert(newJoke)
+                    }
+                    joke.changeCached(true)
+                } else {
+                    it.executeTransaction {
+                        jokeRealm.deleteFromRealm()
+                    }
+                    joke.changeCached(false)
                 }
-                joke.toFavoriteJoke()
-            } else {
-                it.executeTransaction {
-                    jokeRealm.deleteFromRealm()
-                }
-                joke.toBaseJoke()
             }
         }
+
 }
