@@ -8,28 +8,27 @@ import java.lang.Exception
 
 class BaseJokeInteractor(
         private val repository: JokeRepository,
-        private val resourceManager: ResourceManager
+        private val jokeFailureHandler: JokeFailureHandler
 ) : JokeInteractor {
 
     override suspend fun getJoke(): Joke {
         return try {
             Joke.Success(repository.getJoke().text, repository.getJoke().punchline, false)
         } catch (e: Exception) {
-            val message = when (e) {
-                is NoConnectionException -> NoConnection(resourceManager).getMessage()
-                is NoCachedJokesException -> NoCachedJokes(resourceManager).getMessage()
-                is ServiceUnavailableException -> ServiceUnavailable(resourceManager).getMessage()
-                else -> resourceManager.getString(R.string.generic_fail_message)
-            }
-            Joke.Failed(message)
+            Joke.Failed(jokeFailureHandler.handle(e))
         }
     }
 
     override suspend fun changeFavorites(): Joke {
-        TODO("Not yet implemented")
+        return try {
+            val joke = repository.changeJokeStatus()
+            Joke.Success(joke.text, joke.punchline)
+        } catch (e: Exception) {
+            Joke.Failed(jokeFailureHandler.handle(e))
+        }
     }
 
     override suspend fun getFavoriteJokes(favorites: Boolean) {
-        TODO("Not yet implemented")
+        repository.chooseDataSource(favorites)
     }
 }
