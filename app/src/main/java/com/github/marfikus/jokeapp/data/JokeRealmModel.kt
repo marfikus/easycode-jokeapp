@@ -1,6 +1,5 @@
 package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.core.Mapper
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -10,14 +9,6 @@ open class JokeRealmModel : RealmObject(), Mapper<JokeDataModel> {
     var id: Int = -1
     var text: String = ""
     var punchline: String = ""
-    var type: String = ""
 
-    override fun to() = JokeDataModel(id, type, text, punchline)
-
-    fun toJoke() = Joke(
-        id = id,
-        type = type,
-        text = text,
-        punchline = punchline
-    )
+    override fun to() = JokeDataModel(id, text, punchline, true)
 }
