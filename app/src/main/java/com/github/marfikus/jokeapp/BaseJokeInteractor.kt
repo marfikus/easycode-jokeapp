@@ -5,12 +5,13 @@ import java.lang.Exception
 
 class BaseJokeInteractor(
         private val repository: JokeRepository,
-        private val jokeFailureHandler: JokeFailureHandler
+        private val jokeFailureHandler: JokeFailureHandler,
+        private val mapper: JokeDataModelMapper<Joke.Success>
 ) : JokeInteractor {
 
     override suspend fun getJoke(): Joke {
         return try {
-            repository.getJoke().toJoke()
+            repository.getJoke().map(mapper)
         } catch (e: Exception) {
             Joke.Failed(jokeFailureHandler.handle(e))
         }
@@ -18,7 +19,7 @@ class BaseJokeInteractor(
 
     override suspend fun changeFavorites(): Joke {
         return try {
-            repository.changeJokeStatus().toJoke()
+            repository.changeJokeStatus().map(mapper)
         } catch (e: Exception) {
             Joke.Failed(jokeFailureHandler.handle(e))
         }

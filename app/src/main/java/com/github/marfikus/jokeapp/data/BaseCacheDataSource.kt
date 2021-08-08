@@ -1,11 +1,15 @@
 package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.*
+import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.domain.NoCachedJokesException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataSource {
+class BaseCacheDataSource(
+        private val realmProvider: RealmProvider,
+        private val mapper: JokeDataModelMapper<JokeRealmModel>
+) : CacheDataSource {
 
     override suspend fun getJoke(): JokeDataModel {
         realmProvider.provide().use {
@@ -25,7 +29,7 @@ class BaseCacheDataSource(private val realmProvider: RealmProvider) : CacheDataS
                         it.where(JokeRealmModel::class.java).equalTo("id", id).findFirst()
                 return@withContext if (jokeRealm == null) {
                     it.executeTransaction { transaction ->
-                        val newJoke = joke.toRealm()
+                        val newJoke = joke.map(mapper)
                         transaction.insert(newJoke)
                     }
                     joke.changeCached(true)

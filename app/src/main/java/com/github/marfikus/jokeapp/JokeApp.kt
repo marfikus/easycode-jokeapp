@@ -27,11 +27,11 @@ class JokeApp : MultiDexApplication() {
                 .build()
         Realm.setDefaultConfiguration(realmConfig)
 
-        val cacheDataSource = BaseCacheDataSource(BaseRealmProvider())
+        val cacheDataSource = BaseCacheDataSource(BaseRealmProvider(), JokeRealmMapper())
         val resourceManager = BaseResourceManager(this)
         val cloudDataSource = BaseCloudDataSource(retrofit.create(JokeService::class.java))
         val repository = BaseJokeRepository(cacheDataSource, cloudDataSource, BaseCachedJoke())
-        val interactor = BaseJokeInteractor(repository, JokeFailureFactory(resourceManager))
+        val interactor = BaseJokeInteractor(repository, JokeFailureFactory(resourceManager), JokeSuccessMapper())
 
         baseViewModel = BaseViewModel(interactor, BaseCommunication())
 
