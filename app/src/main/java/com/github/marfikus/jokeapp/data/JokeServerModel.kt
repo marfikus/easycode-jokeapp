@@ -1,6 +1,5 @@
 package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.core.Mapper
 import com.google.gson.annotations.SerializedName
 
@@ -15,12 +14,5 @@ data class JokeServerModel(
     private val punchline: String
 ) : Mapper<JokeDataModel> {
 
-    override fun to() = JokeDataModel(id, type, text, punchline)
-
-    fun toJoke() = Joke(
-        id = id,
-        type = type,
-        text = text,
-        punchline = punchline
-    )
+    override fun to() = JokeDataModel(id, text, punchline)
 }

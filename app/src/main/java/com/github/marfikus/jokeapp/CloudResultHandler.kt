@@ -1,5 +1,6 @@
 package com.github.marfikus.jokeapp
 
+/*
 import com.github.marfikus.jokeapp.data.JokeServerModel
 import com.github.marfikus.jokeapp.data.Result
 
@@ -27,4 +28,4 @@ class CloudResultHandler(
         }
     }
 
-}
+}*/

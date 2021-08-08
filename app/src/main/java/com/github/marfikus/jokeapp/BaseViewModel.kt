@@ -53,8 +53,7 @@ class BaseViewModel(
         protected open fun show(textView: ShowText, imageButton: ShowImage) {}
 
         object Progress: State() {
-            override val type: Int
-                get() = TODO("Not yet implemented")
+            override val type = PROGRESS
 
             override fun show(progress: ShowView, button: EnableView) {
                 progress.show(true)

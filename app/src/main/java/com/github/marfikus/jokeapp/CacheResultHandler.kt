@@ -1,5 +1,6 @@
 package com.github.marfikus.jokeapp
 
+/*
 import com.github.marfikus.jokeapp.data.Result
 import com.github.marfikus.jokeapp.domain.Joke
 
@@ -20,4 +21,4 @@ class CacheResultHandler(
         }
     }
 
-}
+}*/
