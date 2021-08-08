@@ -21,7 +21,6 @@ class BaseJokeRepository(
     }
 
     override suspend fun getJoke(): JokeDataModel = withContext(Dispatchers.IO) {
-//        return@withContext currentResultHandler.process()
         try {
             val joke = currentDataSource.getJoke()
             cachedJoke.saveJoke(joke)
@@ -32,6 +31,5 @@ class BaseJokeRepository(
         }
     }
 
-    override suspend fun changeJokeStatus(): JokeDataModel? =
-            cachedJoke.change(cacheDataSource)
+    override suspend fun changeJokeStatus(): JokeDataModel = cachedJoke.change(cacheDataSource)
 }

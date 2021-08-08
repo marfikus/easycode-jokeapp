@@ -26,7 +26,7 @@ class BaseViewModel(
     }
 
     fun chooseFavorites(favorites: Boolean) {
-        jokeRepository.chooseDataSource(favorites)
+        interactor.getFavoriteJokes(favorites)
     }
 
     fun observe(owner: LifecycleOwner, observer: Observer<State>) =
@@ -53,6 +53,9 @@ class BaseViewModel(
         protected open fun show(textView: ShowText, imageButton: ShowImage) {}
 
         object Progress: State() {
+            override val type: Int
+                get() = TODO("Not yet implemented")
+
             override fun show(progress: ShowView, button: EnableView) {
                 progress.show(true)
                 button.enable(false)

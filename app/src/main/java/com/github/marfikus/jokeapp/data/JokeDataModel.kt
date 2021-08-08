@@ -2,12 +2,13 @@ package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.ChangeJoke
 import com.github.marfikus.jokeapp.ChangeJokeStatus
+import com.github.marfikus.jokeapp.domain.Joke
 
 class JokeDataModel(
         private val id: Int,
-        val text: String,
-        val punchline: String,
-        val cahched: Boolean = false
+        private val text: String,
+        private val punchline: String,
+        private val cached: Boolean = false
 ) : ChangeJoke {
 
     override suspend fun change(changeJokeStatus: ChangeJokeStatus) =
@@ -22,4 +23,6 @@ class JokeDataModel(
     fun changeCached(cached: Boolean): JokeDataModel {
         return JokeDataModel(id, text, punchline, cached)
     }
+
+    fun toJoke() = Joke.Success(text, punchline, cached)
 }
