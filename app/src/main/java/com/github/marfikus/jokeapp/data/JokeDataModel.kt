@@ -2,7 +2,7 @@ package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.ChangeJoke
 import com.github.marfikus.jokeapp.ChangeJokeStatus
-import com.github.marfikus.jokeapp.domain.Joke
+import com.github.marfikus.jokeapp.JokeDataModelMapper
 
 class JokeDataModel(
         private val id: Int,
@@ -11,18 +11,14 @@ class JokeDataModel(
         private val cached: Boolean = false
 ) : ChangeJoke {
 
+    fun <T> map(mapper: JokeDataModelMapper<T>): T {
+        return mapper.map(id, text, punchline, cached)
+    }
+
     override suspend fun change(changeJokeStatus: ChangeJokeStatus) =
             changeJokeStatus.addOrRemove(id, this)
-
-    fun toRealm() = JokeRealmModel().also { joke ->
-        joke.id = id
-        joke.text = text
-        joke.punchline = punchline
-    }
 
     fun changeCached(cached: Boolean): JokeDataModel {
         return JokeDataModel(id, text, punchline, cached)
     }
-
-    fun toJoke() = Joke.Success(text, punchline, cached)
 }
