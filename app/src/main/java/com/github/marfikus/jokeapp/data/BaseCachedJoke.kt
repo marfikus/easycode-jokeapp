@@ -1,6 +1,4 @@
-package com.github.marfikus.jokeapp
-
-import com.github.marfikus.jokeapp.data.JokeDataModel
+package com.github.marfikus.jokeapp.data
 
 class BaseCachedJoke : CachedJoke {
 

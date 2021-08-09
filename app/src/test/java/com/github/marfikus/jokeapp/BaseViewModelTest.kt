@@ -2,6 +2,8 @@ package com.github.marfikus.jokeapp
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.github.marfikus.jokeapp.data.JokeRepository
+import com.github.marfikus.jokeapp.presentation.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher

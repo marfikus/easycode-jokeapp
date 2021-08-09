@@ -1,7 +1,8 @@
 package com.github.marfikus.jokeapp.data
 
+/*
 import com.github.marfikus.jokeapp.domain.Joke
-import com.github.marfikus.jokeapp.JokeUiModel
+import com.github.marfikus.jokeapp.presentation.JokeUiModel
 
 class TestCacheDataSource : CacheDataSource {
 
@@ -35,3 +36,4 @@ class TestCacheDataSource : CacheDataSource {
 
     fun checkContainsId(id: Int) = map.containsKey(id)
 }
+*/

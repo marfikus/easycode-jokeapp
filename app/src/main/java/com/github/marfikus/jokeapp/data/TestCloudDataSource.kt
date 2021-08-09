@@ -1,6 +1,6 @@
 package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.ErrorType
+/*import com.github.marfikus.jokeapp.ErrorType
 
 class TestCloudDataSource : CloudDataSource {
 
@@ -18,4 +18,4 @@ class TestCloudDataSource : CloudDataSource {
             Result.Error(ErrorType.NO_CONNECTION)
         }
     }
-}
+}*/

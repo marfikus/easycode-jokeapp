@@ -2,6 +2,9 @@ package com.github.marfikus.jokeapp
 
 import androidx.multidex.MultiDexApplication
 import com.github.marfikus.jokeapp.data.*
+import com.github.marfikus.jokeapp.domain.BaseJokeInteractor
+import com.github.marfikus.jokeapp.presentation.BaseCommunication
+import com.github.marfikus.jokeapp.presentation.BaseViewModel
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import retrofit2.Retrofit

@@ -1,6 +1,4 @@
-package com.github.marfikus.jokeapp
-
-import com.github.marfikus.jokeapp.domain.Joke
+package com.github.marfikus.jokeapp.domain
 
 interface JokeInteractor {
 

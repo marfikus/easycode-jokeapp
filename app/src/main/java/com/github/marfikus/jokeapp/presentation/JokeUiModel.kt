@@ -1,6 +1,7 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.presentation
 
 import androidx.annotation.DrawableRes
+import com.github.marfikus.jokeapp.R
 
 abstract class JokeUiModel(private val text: String, private val punchline: String) {
     protected open fun getText() = "$text\n$punchline"
@@ -9,7 +10,7 @@ abstract class JokeUiModel(private val text: String, private val punchline: Stri
     protected abstract fun getIconResId(): Int
 
     open fun show(communication: Communication) = communication.showState(
-        BaseViewModel.State.Initial(getText(), getIconResId())
+            BaseViewModel.State.Initial(getText(), getIconResId())
     )
 }
 

@@ -1,9 +1,5 @@
 package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.ChangeJoke
-import com.github.marfikus.jokeapp.ChangeJokeStatus
-import com.github.marfikus.jokeapp.JokeDataModelMapper
-
 class JokeDataModel(
         private val id: Int,
         private val text: String,

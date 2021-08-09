@@ -1,6 +1,5 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.data.JokeDataModel
 import java.lang.IllegalStateException
 
 interface ChangeJoke {

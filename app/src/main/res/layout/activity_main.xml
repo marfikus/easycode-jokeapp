@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.github.marfikus.jokeapp.CorrectTextView
+        <com.github.marfikus.jokeapp.presentation.CorrectTextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -29,7 +29,7 @@
             android:gravity="center"
             tools:text="Joke or error message" />
         
-        <com.github.marfikus.jokeapp.CorrectImageButton
+        <com.github.marfikus.jokeapp.presentation.CorrectImageButton
             android:id="@+id/changeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,14 +40,14 @@
             android:contentDescription="@string/icon_add_to_favorite" />
     </LinearLayout>
 
-    <com.github.marfikus.jokeapp.CorrectProgressBar
+    <com.github.marfikus.jokeapp.presentation.CorrectProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true" />
 
-    <com.github.marfikus.jokeapp.CorrectButton
+    <com.github.marfikus.jokeapp.presentation.CorrectButton
         android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

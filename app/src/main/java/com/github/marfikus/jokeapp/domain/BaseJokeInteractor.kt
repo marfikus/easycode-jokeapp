@@ -1,6 +1,8 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.domain
 
-import com.github.marfikus.jokeapp.domain.Joke
+import com.github.marfikus.jokeapp.data.JokeDataModelMapper
+import com.github.marfikus.jokeapp.JokeFailureHandler
+import com.github.marfikus.jokeapp.data.JokeRepository
 import java.lang.Exception
 
 class BaseJokeInteractor(

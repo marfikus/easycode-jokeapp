@@ -1,7 +1,6 @@
 package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.*
-import com.github.marfikus.jokeapp.domain.Joke
 import com.github.marfikus.jokeapp.domain.NoCachedJokesException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

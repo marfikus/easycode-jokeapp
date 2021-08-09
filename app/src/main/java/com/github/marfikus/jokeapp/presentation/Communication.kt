@@ -1,4 +1,4 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer

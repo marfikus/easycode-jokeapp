@@ -1,9 +1,6 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
 import com.github.marfikus.jokeapp.*
-import com.github.marfikus.jokeapp.data.CacheDataSource
-import com.github.marfikus.jokeapp.data.CloudDataSource
-import com.github.marfikus.jokeapp.data.JokeDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.Exception

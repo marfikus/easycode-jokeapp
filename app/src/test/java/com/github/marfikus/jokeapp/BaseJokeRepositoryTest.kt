@@ -1,7 +1,10 @@
 package com.github.marfikus.jokeapp
 
+import com.github.marfikus.jokeapp.data.BaseCachedJoke
+import com.github.marfikus.jokeapp.data.BaseJokeRepository
 import com.github.marfikus.jokeapp.data.TestCacheDataSource
 import com.github.marfikus.jokeapp.data.TestCloudDataSource
+import com.github.marfikus.jokeapp.presentation.BaseJokeUiModel
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 

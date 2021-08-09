@@ -1,10 +1,11 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.marfikus.jokeapp.domain.JokeInteractor
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

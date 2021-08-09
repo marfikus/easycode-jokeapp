@@ -1,4 +1,4 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.presentation
 
 import android.content.Context
 import android.util.AttributeSet

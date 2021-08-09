@@ -1,6 +1,5 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.data
 
-import com.github.marfikus.jokeapp.data.JokeRealmModel
 import com.github.marfikus.jokeapp.domain.Joke
 
 interface JokeDataModelMapper<T> {

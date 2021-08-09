@@ -1,9 +1,11 @@
-package com.github.marfikus.jokeapp
+package com.github.marfikus.jokeapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.github.marfikus.jokeapp.JokeApp
+import com.github.marfikus.jokeapp.R
 
 class MainActivity : AppCompatActivity() {
 
